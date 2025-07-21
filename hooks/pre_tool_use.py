@@ -51,6 +51,50 @@ def is_dangerous_rm_command(command):
     
     return False
 
+def is_env_exposure_command(command):
+    """
+    Detect commands that could expose sensitive environment variables.
+    Blocks various forms of env variable dumping and grep patterns.
+    """
+    # Normalize command by removing extra spaces
+    normalized = ' '.join(command.lower().split())
+    
+    # Dangerous environment variable exposure patterns
+    exposure_patterns = [
+        r'\benv\s*\|',  # env | (piped output)
+        r'\bprintenv\s*\|',  # printenv | (piped output)
+        r'\benv\s+.*grep',  # env ... grep
+        r'\bprintenv\s+.*grep',  # printenv ... grep
+        r'\becho\s+.*\$[A-Z_][A-Z0-9_]*',  # echo $VARNAME patterns
+        r'\bprintf\s+.*\$[A-Z_][A-Z0-9_]*',  # printf $VARNAME patterns
+        r'grep\s+.*-[a-z]*E.*\$[A-Z_]',  # grep patterns with env vars
+        r'env\s*$',  # bare env command (shows all vars)
+        r'printenv\s*$',  # bare printenv command
+        r'set\s*\|.*grep',  # set | grep (bash builtin)
+        r'export\s*\|.*grep',  # export | grep
+        r'declare\s*\|.*grep',  # declare | grep (bash)
+    ]
+    
+    # Check for exposure patterns
+    for pattern in exposure_patterns:
+        if re.search(pattern, normalized):
+            return True
+    
+    # Check for specific sensitive variable patterns
+    sensitive_vars = [
+        'api_key', 'secret', 'token', 'password', 'pwd', 'auth',
+        'elevenlabs', 'openai', 'anthropic', 'claude', 'aws', 'gcp',
+        'github', 'gitlab', 'docker', 'npm', 'pypi', 'ssh'
+    ]
+    
+    for var in sensitive_vars:
+        # Pattern: command that might expose variables containing these keywords
+        pattern = rf'(env|printenv|echo|printf).*{var}'
+        if re.search(pattern, normalized):
+            return True
+    
+    return False
+
 def is_env_file_access(tool_name, tool_input):
     """
     Check if any tool is trying to access .env files containing sensitive data.
@@ -95,13 +139,19 @@ def main():
             print("Use .env.sample for template files instead", file=sys.stderr)
             sys.exit(2)  # Exit code 2 blocks tool call and shows error to Claude
         
-        # Check for dangerous rm -rf commands
+        # Check for dangerous commands
         if tool_name == 'Bash':
             command = tool_input.get('command', '')
             
             # Block rm -rf commands with comprehensive pattern matching
             if is_dangerous_rm_command(command):
                 print("BLOCKED: Dangerous rm command detected and prevented", file=sys.stderr)
+                sys.exit(2)  # Exit code 2 blocks tool call and shows error to Claude
+            
+            # Block environment variable exposure commands
+            if is_env_exposure_command(command):
+                print("BLOCKED: Command could expose sensitive environment variables", file=sys.stderr)
+                print("Environment variable access is prohibited for security", file=sys.stderr)
                 sys.exit(2)  # Exit code 2 blocks tool call and shows error to Claude
         
         # Ensure log directory exists
