@@ -1,0 +1,1208 @@
+[
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Bash",
+    "tool_input": {
+      "command": "pwd",
+      "description": "Check current working directory"
+    },
+    "tool_response": {
+      "stdout": "/home/karim/.claude/hooks/utils/tts",
+      "stderr": "",
+      "interrupted": false,
+      "isImage": false
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "LS",
+    "tool_input": {
+      "path": "/home/karim/.claude/hooks/utils/tts"
+    },
+    "tool_response": "- /home/karim/.claude/hooks/utils/tts/\n  - elevenlabs_tts.py\n  - logs/\n    - post_tool_use.json\n    - pre_tool_use.json\n  - openai_tts.py\n  - pyttsx3_tts.py\n"
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Glob",
+    "tool_input": {
+      "pattern": "**/*tts*",
+      "path": "/home/karim/.claude/hooks"
+    },
+    "tool_response": {
+      "filenames": [
+        "/home/karim/.claude/hooks/utils/tts/openai_tts.py",
+        "/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py",
+        "/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py"
+      ],
+      "durationMs": 28,
+      "numFiles": 3,
+      "truncated": false
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Grep",
+    "tool_input": {
+      "pattern": "volume|audio|speech|voice",
+      "path": "/home/karim/.claude/hooks",
+      "output_mode": "files_with_matches",
+      "-i": true
+    },
+    "tool_response": {
+      "mode": "files_with_matches",
+      "filenames": [
+        "/home/karim/.claude/hooks/utils/tts/logs/pre_tool_use.json",
+        "/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py",
+        "/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py",
+        "/home/karim/.claude/hooks/utils/tts/openai_tts.py"
+      ],
+      "numFiles": 4
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Read",
+    "tool_input": {
+      "file_path": "/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py"
+    },
+    "tool_response": {
+      "type": "text",
+      "file": {
+        "filePath": "/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py",
+        "content": "#!/usr/bin/env -S uv run --script\n# /// script\n# requires-python = \">=3.8\"\n# dependencies = [\n#     \"pyttsx3\",\n# ]\n# ///\n\nimport sys\nimport random\n\ndef main():\n    \"\"\"\n    pyttsx3 TTS Script\n    \n    Uses pyttsx3 for offline text-to-speech synthesis.\n    Accepts optional text prompt as command-line argument.\n    \n    Usage:\n    - ./pyttsx3_tts.py                    # Uses default text\n    - ./pyttsx3_tts.py \"Your custom text\" # Uses provided text\n    \n    Features:\n    - Offline TTS (no API key required)\n    - Cross-platform compatibility\n    - Configurable voice settings\n    - Immediate audio playback\n    \"\"\"\n    \n    try:\n        import pyttsx3\n        \n        # Initialize TTS engine\n        engine = pyttsx3.init()\n        \n        # Configure engine settings\n        engine.setProperty('rate', 180)    # Speech rate (words per minute)\n        engine.setProperty('volume', 0.8)  # Volume (0.0 to 1.0)\n        \n        print(\"\ud83c\udf99\ufe0f  pyttsx3 TTS\")\n        print(\"=\" * 15)\n        \n        # Get text from command line argument or use default\n        if len(sys.argv) > 1:\n            text = \" \".join(sys.argv[1:])  # Join all arguments as text\n        else:\n            # Default completion messages\n            completion_messages = [\n                \"Work complete!\",\n                \"All done!\",\n                \"Task finished!\",\n                \"Job complete!\",\n                \"Ready for next task!\"\n            ]\n            text = random.choice(completion_messages)\n        \n        print(f\"\ud83c\udfaf Text: {text}\")\n        print(\"\ud83d\udd0a Speaking...\")\n        \n        # Speak the text\n        engine.say(text)\n        engine.runAndWait()\n        \n        print(\"\u2705 Playback complete!\")\n        \n    except ImportError:\n        print(\"\u274c Error: pyttsx3 package not installed\")\n        print(\"This script uses UV to auto-install dependencies.\")\n        sys.exit(1)\n    except Exception as e:\n        print(f\"\u274c Error: {e}\")\n        sys.exit(1)\n\nif __name__ == \"__main__\":\n    main()",
+        "numLines": 75,
+        "startLine": 1,
+        "totalLines": 75
+      }
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Read",
+    "tool_input": {
+      "file_path": "/home/karim/.claude/hooks/utils/tts/openai_tts.py"
+    },
+    "tool_response": {
+      "type": "text",
+      "file": {
+        "filePath": "/home/karim/.claude/hooks/utils/tts/openai_tts.py",
+        "content": "#!/usr/bin/env -S uv run --script\n# /// script\n# requires-python = \">=3.8\"\n# dependencies = [\n#     \"openai\",\n#     \"openai[voice_helpers]\",\n#     \"python-dotenv\",\n# ]\n# ///\n\nimport os\nimport sys\nimport asyncio\nfrom pathlib import Path\nfrom dotenv import load_dotenv\n\n\nasync def main():\n    \"\"\"\n    OpenAI TTS Script\n\n    Uses OpenAI's latest TTS model for high-quality text-to-speech.\n    Accepts optional text prompt as command-line argument.\n\n    Usage:\n    - ./openai_tts.py                    # Uses default text\n    - ./openai_tts.py \"Your custom text\" # Uses provided text\n\n    Features:\n    - OpenAI gpt-4o-mini-tts model (latest)\n    - Nova voice (engaging and warm)\n    - Streaming audio with instructions support\n    - Live audio playback via LocalAudioPlayer\n    \"\"\"\n\n    # Load environment variables\n    load_dotenv()\n\n    # Get API key from environment\n    api_key = os.getenv(\"OPENAI_API_KEY\")\n    if not api_key:\n        print(\"\u274c Error: OPENAI_API_KEY not found in environment variables\")\n        print(\"Please add your OpenAI API key to .env file:\")\n        print(\"OPENAI_API_KEY=your_api_key_here\")\n        sys.exit(1)\n\n    try:\n        from openai import AsyncOpenAI\n        from openai.helpers import LocalAudioPlayer\n\n        # Initialize OpenAI client\n        openai = AsyncOpenAI(api_key=api_key)\n\n        print(\"\ud83c\udf99\ufe0f  OpenAI TTS\")\n        print(\"=\" * 20)\n\n        # Get text from command line argument or use default\n        if len(sys.argv) > 1:\n            text = \" \".join(sys.argv[1:])  # Join all arguments as text\n        else:\n            text = \"Today is a wonderful day to build something people love!\"\n\n        print(f\"\ud83c\udfaf Text: {text}\")\n        print(\"\ud83d\udd0a Generating and streaming...\")\n\n        try:\n            # Generate and stream audio using OpenAI TTS\n            async with openai.audio.speech.with_streaming_response.create(\n                model=\"gpt-4o-mini-tts\",\n                voice=\"nova\",\n                input=text,\n                instructions=\"Speak in a cheerful, positive yet professional tone.\",\n                response_format=\"mp3\",\n            ) as response:\n                await LocalAudioPlayer().play(response)\n\n            print(\"\u2705 Playback complete!\")\n\n        except Exception as e:\n            print(f\"\u274c Error: {e}\")\n\n    except ImportError as e:\n        print(\"\u274c Error: Required package not installed\")\n        print(\"This script uses UV to auto-install dependencies.\")\n        print(\"Make sure UV is installed: https://docs.astral.sh/uv/\")\n        sys.exit(1)\n    except Exception as e:\n        print(f\"\u274c Unexpected error: {e}\")\n        sys.exit(1)\n\n\nif __name__ == \"__main__\":\n    asyncio.run(main())\n",
+        "numLines": 94,
+        "startLine": 1,
+        "totalLines": 94
+      }
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Read",
+    "tool_input": {
+      "file_path": "/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py"
+    },
+    "tool_response": {
+      "type": "text",
+      "file": {
+        "filePath": "/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py",
+        "content": "#!/usr/bin/env -S uv run --script\n# /// script\n# requires-python = \">=3.8\"\n# dependencies = [\n#     \"elevenlabs\",\n#     \"python-dotenv\",\n# ]\n# ///\n\nimport os\nimport sys\nfrom pathlib import Path\nfrom dotenv import load_dotenv\n\ndef main():\n    \"\"\"\n    ElevenLabs Turbo v2.5 TTS Script\n    \n    Uses ElevenLabs' Turbo v2.5 model for fast, high-quality text-to-speech.\n    Accepts optional text prompt as command-line argument.\n    \n    Usage:\n    - ./eleven_turbo_tts.py                    # Uses default text\n    - ./eleven_turbo_tts.py \"Your custom text\" # Uses provided text\n    \n    Features:\n    - Fast generation (optimized for real-time use)\n    - High-quality voice synthesis\n    - Stable production model\n    - Cost-effective for high-volume usage\n    \"\"\"\n    \n    # Load environment variables\n    load_dotenv()\n    \n    # Get API key from environment\n    api_key = os.getenv('ELEVENLABS_API_KEY')\n    if not api_key:\n        print(\"\u274c Error: ELEVENLABS_API_KEY not found in environment variables\")\n        print(\"Please add your ElevenLabs API key to .env file:\")\n        print(\"ELEVENLABS_API_KEY=your_api_key_here\")\n        sys.exit(1)\n    \n    try:\n        from elevenlabs.client import ElevenLabs\n        from elevenlabs import play\n        \n        # Initialize client\n        elevenlabs = ElevenLabs(api_key=api_key)\n        \n        print(\"\ud83c\udf99\ufe0f  ElevenLabs Turbo v2.5 TTS\")\n        print(\"=\" * 40)\n        \n        # Get text from command line argument or use default\n        if len(sys.argv) > 1:\n            text = \" \".join(sys.argv[1:])  # Join all arguments as text\n        else:\n            text = \"The first move is what sets everything in motion.\"\n        \n        print(f\"\ud83c\udfaf Text: {text}\")\n        print(\"\ud83d\udd0a Generating and playing...\")\n        \n        try:\n            # Generate and play audio directly\n            audio = elevenlabs.text_to_speech.convert(\n                text=text,\n                voice_id=\"onwK4e9ZLuTAKqWW03F9\",  # Daniel voice\n                model_id=\"eleven_turbo_v2_5\",\n                output_format=\"mp3_44100_128\",\n            )\n            \n            play(audio)\n            print(\"\u2705 Playback complete!\")\n            \n        except Exception as e:\n            print(f\"\u274c Error: {e}\")\n        \n        \n    except ImportError:\n        print(\"\u274c Error: elevenlabs package not installed\")\n        print(\"This script uses UV to auto-install dependencies.\")\n        print(\"Make sure UV is installed: https://docs.astral.sh/uv/\")\n        sys.exit(1)\n    except Exception as e:\n        print(f\"\u274c Unexpected error: {e}\")\n        sys.exit(1)\n\nif __name__ == \"__main__\":\n    main()",
+        "numLines": 89,
+        "startLine": 1,
+        "totalLines": 89
+      }
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Glob",
+    "tool_input": {
+      "pattern": "**/*.{json,yaml,yml,toml,conf,config}",
+      "path": "/home/karim/.claude"
+    },
+    "tool_response": {
+      "filenames": [
+        "/home/karim/.claude/todos/83e4c8f0-ff63-4ea9-96ff-1b61dd2a44c7-agent-83e4c8f0-ff63-4ea9-96ff-1b61dd2a44c7.json",
+        "/home/karim/.claude/todos/41e71ea4-7e73-462b-8202-c371ccc5cd28-agent-41e71ea4-7e73-462b-8202-c371ccc5cd28.json",
+        "/home/karim/.claude/todos/7209a661-95ed-4eda-99a6-257d45435886-agent-7209a661-95ed-4eda-99a6-257d45435886.json",
+        "/home/karim/.claude/todos/93d3f717-8751-403c-8e16-970e9eb2e340-agent-93d3f717-8751-403c-8e16-970e9eb2e340.json",
+        "/home/karim/.claude/todos/0699bfe1-7c0a-49a5-958b-02e93f5574b6-agent-0699bfe1-7c0a-49a5-958b-02e93f5574b6.json",
+        "/home/karim/.claude/todos/eab2ae42-5b3c-46dd-ac4e-1ec8fbfca0fe-agent-eab2ae42-5b3c-46dd-ac4e-1ec8fbfca0fe.json",
+        "/home/karim/.claude/todos/847ab0fa-0d29-4195-b16c-de094508afbe-agent-847ab0fa-0d29-4195-b16c-de094508afbe.json",
+        "/home/karim/.claude/todos/d891bf4c-5ebd-4709-9364-36a7ae238733-agent-d891bf4c-5ebd-4709-9364-36a7ae238733.json",
+        "/home/karim/.claude/todos/b3bc5518-c317-4a18-aad3-f4d476f8908c-agent-b3bc5518-c317-4a18-aad3-f4d476f8908c.json",
+        "/home/karim/.claude/todos/56f8150f-d10b-4250-9649-b92ef49a785b-agent-56f8150f-d10b-4250-9649-b92ef49a785b.json",
+        "/home/karim/.claude/todos/4f83a3b2-80a0-49ae-9627-b4ab79666300-agent-4f83a3b2-80a0-49ae-9627-b4ab79666300.json",
+        "/home/karim/.claude/todos/849e105b-5ce1-42c4-9fa1-aa226bd3ecc8-agent-849e105b-5ce1-42c4-9fa1-aa226bd3ecc8.json",
+        "/home/karim/.claude/todos/84f7d2cf-7149-4522-b6b3-5315efd65ff8-agent-84f7d2cf-7149-4522-b6b3-5315efd65ff8.json",
+        "/home/karim/.claude/todos/d54157e3-326b-4e62-afef-8070103e9edc-agent-d54157e3-326b-4e62-afef-8070103e9edc.json",
+        "/home/karim/.claude/todos/849e09a7-9479-4a80-97d2-4f1998a751a0-agent-849e09a7-9479-4a80-97d2-4f1998a751a0.json",
+        "/home/karim/.claude/todos/31a80543-55df-4986-afa1-6648ed13ab96-agent-31a80543-55df-4986-afa1-6648ed13ab96.json",
+        "/home/karim/.claude/todos/32e73a12-e46d-4953-9c92-1b1b830b4774-agent-32e73a12-e46d-4953-9c92-1b1b830b4774.json",
+        "/home/karim/.claude/todos/ef8f91ce-8689-4b99-8c14-b835b73b033a-agent-ef8f91ce-8689-4b99-8c14-b835b73b033a.json",
+        "/home/karim/.claude/todos/c113be72-eda2-4047-8c0b-8c5facad99d3-agent-c113be72-eda2-4047-8c0b-8c5facad99d3.json",
+        "/home/karim/.claude/todos/abe5c1c6-5f44-41e4-be29-9f67f3c08d9d-agent-abe5c1c6-5f44-41e4-be29-9f67f3c08d9d.json",
+        "/home/karim/.claude/todos/f1995bd8-8c03-407b-8155-899ff5eb4b4f-agent-f1995bd8-8c03-407b-8155-899ff5eb4b4f.json",
+        "/home/karim/.claude/todos/3313f6c7-c815-4c67-8fd5-236d876478bd-agent-3313f6c7-c815-4c67-8fd5-236d876478bd.json",
+        "/home/karim/.claude/todos/4d02c4f3-d454-443f-9e38-3327b830098a-agent-4d02c4f3-d454-443f-9e38-3327b830098a.json",
+        "/home/karim/.claude/todos/635fdf96-b7d8-4aab-8a44-c5842866c5c8-agent-635fdf96-b7d8-4aab-8a44-c5842866c5c8.json",
+        "/home/karim/.claude/todos/9b377c4c-2239-447c-ae23-b6f2d8f6efea-agent-9b377c4c-2239-447c-ae23-b6f2d8f6efea.json",
+        "/home/karim/.claude/todos/513e00cc-0cd4-4fb6-abae-4b4f58d85780-agent-513e00cc-0cd4-4fb6-abae-4b4f58d85780.json",
+        "/home/karim/.claude/todos/c322e02b-eda3-41db-b1b6-d65fdf3b82eb-agent-c322e02b-eda3-41db-b1b6-d65fdf3b82eb.json",
+        "/home/karim/.claude/todos/8a5ae3f2-d3fc-4fa4-bb5c-133fc1df30d5-agent-8a5ae3f2-d3fc-4fa4-bb5c-133fc1df30d5.json",
+        "/home/karim/.claude/todos/4019261f-8653-415b-8bb0-23aa16631d37-agent-4019261f-8653-415b-8bb0-23aa16631d37.json",
+        "/home/karim/.claude/todos/34d37271-7758-4b48-88e5-b75a6d191da0-agent-34d37271-7758-4b48-88e5-b75a6d191da0.json",
+        "/home/karim/.claude/todos/a6a56a6a-5d0c-4ef4-9f6a-6fef006cf5aa-agent-a6a56a6a-5d0c-4ef4-9f6a-6fef006cf5aa.json",
+        "/home/karim/.claude/todos/42ade3d0-4980-44a9-a20f-b941d272ab6d-agent-42ade3d0-4980-44a9-a20f-b941d272ab6d.json",
+        "/home/karim/.claude/todos/d2656ac5-c3df-4c59-99c7-276f2449c79c-agent-d2656ac5-c3df-4c59-99c7-276f2449c79c.json",
+        "/home/karim/.claude/todos/f8460a98-e64c-485e-bfa5-49bf584bf0da-agent-f8460a98-e64c-485e-bfa5-49bf584bf0da.json",
+        "/home/karim/.claude/todos/cf51b977-1c78-49af-8873-d9816e71f36f-agent-cf51b977-1c78-49af-8873-d9816e71f36f.json",
+        "/home/karim/.claude/todos/0322c051-e13f-4e8f-b2ac-b1ee0bd6906c-agent-0322c051-e13f-4e8f-b2ac-b1ee0bd6906c.json",
+        "/home/karim/.claude/todos/334307fc-4521-4a50-b659-8f36f10ce8ac-agent-334307fc-4521-4a50-b659-8f36f10ce8ac.json",
+        "/home/karim/.claude/todos/b8fd611b-237d-4149-9b9b-31af6c03aa8a-agent-b8fd611b-237d-4149-9b9b-31af6c03aa8a.json",
+        "/home/karim/.claude/todos/390b082f-fbca-4726-aead-3c2fbc18fc69-agent-390b082f-fbca-4726-aead-3c2fbc18fc69.json",
+        "/home/karim/.claude/todos/c248937f-246b-4ebb-b51a-2ef6b6b5df52-agent-c248937f-246b-4ebb-b51a-2ef6b6b5df52.json",
+        "/home/karim/.claude/todos/707d1757-e905-4834-8bdd-b2d075601893-agent-707d1757-e905-4834-8bdd-b2d075601893.json",
+        "/home/karim/.claude/todos/60a45f3d-dd37-48cf-bad7-f01ffcee6bf8-agent-60a45f3d-dd37-48cf-bad7-f01ffcee6bf8.json",
+        "/home/karim/.claude/todos/a3318db9-8599-4e35-83fc-adfc42f0903e-agent-a3318db9-8599-4e35-83fc-adfc42f0903e.json",
+        "/home/karim/.claude/todos/dcb37729-3f92-4915-a6c6-8931d87831ef-agent-dcb37729-3f92-4915-a6c6-8931d87831ef.json",
+        "/home/karim/.claude/todos/e23b396b-cf4e-442e-8556-242969f05b6b-agent-e23b396b-cf4e-442e-8556-242969f05b6b.json",
+        "/home/karim/.claude/todos/a9020b20-6e62-4d8e-84ff-0cefe107096e-agent-a9020b20-6e62-4d8e-84ff-0cefe107096e.json",
+        "/home/karim/.claude/todos/31dbf4b6-083d-4fd7-a813-6e99762026d8-agent-31dbf4b6-083d-4fd7-a813-6e99762026d8.json",
+        "/home/karim/.claude/todos/2bfdae5f-98b3-41b6-991d-41ab89b1619d-agent-2bfdae5f-98b3-41b6-991d-41ab89b1619d.json",
+        "/home/karim/.claude/todos/d279db7e-000c-4fd3-a218-4eae920fef09-agent-d279db7e-000c-4fd3-a218-4eae920fef09.json",
+        "/home/karim/.claude/todos/86844ef8-397c-4c60-a7fc-f547fda1b6df-agent-86844ef8-397c-4c60-a7fc-f547fda1b6df.json",
+        "/home/karim/.claude/todos/a2e69f16-6831-484f-9df4-1e6294f2b367-agent-a2e69f16-6831-484f-9df4-1e6294f2b367.json",
+        "/home/karim/.claude/todos/7bbdf580-c654-4de6-a856-29105c658845-agent-7bbdf580-c654-4de6-a856-29105c658845.json",
+        "/home/karim/.claude/todos/700dc6ff-c624-4790-976f-be1e9d1387da-agent-700dc6ff-c624-4790-976f-be1e9d1387da.json",
+        "/home/karim/.claude/todos/72ff055e-7d64-4e8e-ad28-2ece29d00c77-agent-72ff055e-7d64-4e8e-ad28-2ece29d00c77.json",
+        "/home/karim/.claude/todos/abf94ec5-b6a9-4276-a7f9-5ac7a288bdac-agent-abf94ec5-b6a9-4276-a7f9-5ac7a288bdac.json",
+        "/home/karim/.claude/todos/f508763d-9303-499c-bbb8-f73f092c59d6-agent-f508763d-9303-499c-bbb8-f73f092c59d6.json",
+        "/home/karim/.claude/todos/94dc6db8-cacb-4a9c-ab5d-9e4a95e20baa-agent-94dc6db8-cacb-4a9c-ab5d-9e4a95e20baa.json",
+        "/home/karim/.claude/todos/bf2427cd-07ea-4e62-8fd7-dee364e0eb5d-agent-bf2427cd-07ea-4e62-8fd7-dee364e0eb5d.json",
+        "/home/karim/.claude/todos/42cce0e7-8d49-42c2-8417-3ca54f01a1bd-agent-591353a3-b096-4cf5-8297-d28cbe8e5a94.json",
+        "/home/karim/.claude/todos/42cce0e7-8d49-42c2-8417-3ca54f01a1bd-agent-42cce0e7-8d49-42c2-8417-3ca54f01a1bd.json",
+        "/home/karim/.claude/todos/90ea3432-250c-454f-aef7-87d37894c6ad-agent-90ea3432-250c-454f-aef7-87d37894c6ad.json",
+        "/home/karim/.claude/todos/fbe2b24c-cf39-46c2-a8f8-5822ca86f7e6-agent-fbe2b24c-cf39-46c2-a8f8-5822ca86f7e6.json",
+        "/home/karim/.claude/todos/57924f01-225b-45b6-807b-a37873499af1-agent-57924f01-225b-45b6-807b-a37873499af1.json",
+        "/home/karim/.claude/todos/a9681b8f-767b-4de4-89f0-66176da7b5a2-agent-a9681b8f-767b-4de4-89f0-66176da7b5a2.json",
+        "/home/karim/.claude/todos/05f6b50b-552a-44c8-aab4-f88f56216d1d-agent-05f6b50b-552a-44c8-aab4-f88f56216d1d.json",
+        "/home/karim/.claude/todos/1c275487-4c22-48a6-be9f-da8d38061ba4-agent-1c275487-4c22-48a6-be9f-da8d38061ba4.json",
+        "/home/karim/.claude/todos/48ead655-1ecf-4341-b5cc-c9d52b290035-agent-48ead655-1ecf-4341-b5cc-c9d52b290035.json",
+        "/home/karim/.claude/todos/15e79e2e-4288-4ec9-b4dd-eff35331451d-agent-15e79e2e-4288-4ec9-b4dd-eff35331451d.json",
+        "/home/karim/.claude/todos/553881c5-03ae-4c6b-a72a-b8cadba1b07d-agent-553881c5-03ae-4c6b-a72a-b8cadba1b07d.json",
+        "/home/karim/.claude/todos/15857d70-d0f6-4b63-a058-3c089fe28672-agent-15857d70-d0f6-4b63-a058-3c089fe28672.json",
+        "/home/karim/.claude/todos/8270a985-937b-4c01-b672-0b45007c443e-agent-8270a985-937b-4c01-b672-0b45007c443e.json",
+        "/home/karim/.claude/todos/2e012731-41f1-4949-a156-a4a915f5443a-agent-2e012731-41f1-4949-a156-a4a915f5443a.json",
+        "/home/karim/.claude/todos/69a94236-e9af-4190-9e23-9c2e02c9e7ff-agent-69a94236-e9af-4190-9e23-9c2e02c9e7ff.json",
+        "/home/karim/.claude/todos/45ed3dcb-6784-4259-9470-d5c3f5d4443a-agent-45ed3dcb-6784-4259-9470-d5c3f5d4443a.json",
+        "/home/karim/.claude/todos/341e4e8c-a8c6-4478-9b06-61ec9616605e-agent-341e4e8c-a8c6-4478-9b06-61ec9616605e.json",
+        "/home/karim/.claude/todos/e1282010-7362-4a66-ab4a-823462ad5a7d-agent-e1282010-7362-4a66-ab4a-823462ad5a7d.json",
+        "/home/karim/.claude/todos/72372454-381b-44d9-8d3d-e797d9aefe5f-agent-72372454-381b-44d9-8d3d-e797d9aefe5f.json",
+        "/home/karim/.claude/todos/447540c2-3242-4928-a319-35cacd9469cc-agent-447540c2-3242-4928-a319-35cacd9469cc.json",
+        "/home/karim/.claude/todos/8656dfe2-4e8f-4499-8a4a-9cd43c7e2adc-agent-8656dfe2-4e8f-4499-8a4a-9cd43c7e2adc.json",
+        "/home/karim/.claude/todos/168ea6bc-36ca-48ea-87d7-3c502047678c-agent-168ea6bc-36ca-48ea-87d7-3c502047678c.json",
+        "/home/karim/.claude/todos/2578e5d7-8b0e-4d2b-99e5-5da805221c65-agent-2578e5d7-8b0e-4d2b-99e5-5da805221c65.json",
+        "/home/karim/.claude/todos/fe6a8a5c-e062-4ebe-8e37-17086214a2da-agent-fe6a8a5c-e062-4ebe-8e37-17086214a2da.json",
+        "/home/karim/.claude/todos/30e612c6-10d8-43de-b874-1fbd3c1ffebd-agent-30e612c6-10d8-43de-b874-1fbd3c1ffebd.json",
+        "/home/karim/.claude/todos/e0bd42a1-f997-4587-a4ca-9e8efd295248-agent-e0bd42a1-f997-4587-a4ca-9e8efd295248.json",
+        "/home/karim/.claude/todos/3abe6f99-998e-4221-a26e-b1890e27d49c-agent-3abe6f99-998e-4221-a26e-b1890e27d49c.json",
+        "/home/karim/.claude/todos/54f8d05f-85a8-4b57-a988-48670f55bde8-agent-54f8d05f-85a8-4b57-a988-48670f55bde8.json",
+        "/home/karim/.claude/todos/eecedbce-dfd7-46e1-8edd-224fe9b47334-agent-eecedbce-dfd7-46e1-8edd-224fe9b47334.json",
+        "/home/karim/.claude/todos/f58fc673-250c-4931-8f88-5ee1aedbf3f8-agent-f58fc673-250c-4931-8f88-5ee1aedbf3f8.json",
+        "/home/karim/.claude/todos/d23325b6-1a2f-484b-9734-f8167e57802b-agent-d23325b6-1a2f-484b-9734-f8167e57802b.json",
+        "/home/karim/.claude/todos/9fc1e895-7a7e-4f0b-b740-e263fca3fd82-agent-9fc1e895-7a7e-4f0b-b740-e263fca3fd82.json",
+        "/home/karim/.claude/todos/498ecda8-aeae-4546-ad7a-b6bd79bfeb22-agent-498ecda8-aeae-4546-ad7a-b6bd79bfeb22.json",
+        "/home/karim/.claude/todos/de6a6937-def3-4676-b04e-4aa16df5b3ec-agent-de6a6937-def3-4676-b04e-4aa16df5b3ec.json",
+        "/home/karim/.claude/todos/c651447f-8c89-4c0e-aeac-974131504790-agent-c651447f-8c89-4c0e-aeac-974131504790.json",
+        "/home/karim/.claude/todos/e962f723-a904-432d-9c3a-ab55499947e4-agent-e962f723-a904-432d-9c3a-ab55499947e4.json",
+        "/home/karim/.claude/todos/c0ea2ee4-3364-44d9-a1ca-7b96cd02e652-agent-c0ea2ee4-3364-44d9-a1ca-7b96cd02e652.json",
+        "/home/karim/.claude/todos/7896dd1d-6eb4-4f5f-ba7c-b2780893613a-agent-7896dd1d-6eb4-4f5f-ba7c-b2780893613a.json",
+        "/home/karim/.claude/todos/a18c090c-2ffc-48b3-9498-e027505db4b3-agent-a18c090c-2ffc-48b3-9498-e027505db4b3.json",
+        "/home/karim/.claude/todos/ae7b10d2-f72e-4026-a51c-1b8993a02978-agent-ae7b10d2-f72e-4026-a51c-1b8993a02978.json",
+        "/home/karim/.claude/todos/b4b7ded8-e3b0-4e1c-9e29-39ee17a0b043-agent-b4b7ded8-e3b0-4e1c-9e29-39ee17a0b043.json",
+        "/home/karim/.claude/todos/9e13a506-ba72-43d2-ba65-cb088c36fcc6-agent-9e13a506-ba72-43d2-ba65-cb088c36fcc6.json"
+      ],
+      "durationMs": 42,
+      "numFiles": 100,
+      "truncated": true
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Read",
+    "tool_input": {
+      "file_path": "/home/karim/.claude/hooks/utils/tts/logs/pre_tool_use.json"
+    },
+    "tool_response": {
+      "type": "text",
+      "file": {
+        "filePath": "/home/karim/.claude/hooks/utils/tts/logs/pre_tool_use.json",
+        "content": "[\n  {\n    \"session_id\": \"1b460138-2a8a-455b-84c0-a3743d756dce\",\n    \"transcript_path\": \"/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl\",\n    \"hook_event_name\": \"PreToolUse\",\n    \"tool_name\": \"Task\",\n    \"tool_input\": {\n      \"description\": \"Search for TTS implementation\",\n      \"prompt\": \"Search for files related to TTS (text-to-speech) implementation, volume control, or audio settings. Look for configuration files, scripts, or code that handles TTS commands.\"\n    }\n  },\n  {\n    \"session_id\": \"1b460138-2a8a-455b-84c0-a3743d756dce\",\n    \"transcript_path\": \"/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl\",\n    \"hook_event_name\": \"PreToolUse\",\n    \"tool_name\": \"Bash\",\n    \"tool_input\": {\n      \"command\": \"pwd\",\n      \"description\": \"Check current working directory\"\n    }\n  },\n  {\n    \"session_id\": \"1b460138-2a8a-455b-84c0-a3743d756dce\",\n    \"transcript_path\": \"/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl\",\n    \"hook_event_name\": \"PreToolUse\",\n    \"tool_name\": \"LS\",\n    \"tool_input\": {\n      \"path\": \"/home/karim/.claude/hooks/utils/tts\"\n    }\n  },\n  {\n    \"session_id\": \"1b460138-2a8a-455b-84c0-a3743d756dce\",\n    \"transcript_path\": \"/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl\",\n    \"hook_event_name\": \"PreToolUse\",\n    \"tool_name\": \"Glob\",\n    \"tool_input\": {\n      \"pattern\": \"**/*tts*\",\n      \"path\": \"/home/karim/.claude/hooks\"\n    }\n  },\n  {\n    \"session_id\": \"1b460138-2a8a-455b-84c0-a3743d756dce\",\n    \"transcript_path\": \"/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl\",\n    \"hook_event_name\": \"PreToolUse\",\n    \"tool_name\": \"Grep\",\n    \"tool_input\": {\n      \"pattern\": \"volume|audio|speech|voice\",\n      \"path\": \"/home/karim/.claude/hooks\",\n      \"output_mode\": \"files_with_matches\",\n      \"-i\": true\n    }\n  },\n  {\n    \"session_id\": \"1b460138-2a8a-455b-84c0-a3743d756dce\",\n    \"transcript_path\": \"/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl\",\n    \"hook_event_name\": \"PreToolUse\",\n    \"tool_name\": \"Read\",\n    \"tool_input\": {\n      \"file_path\": \"/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py\"\n    }\n  },\n  {\n    \"session_id\": \"1b460138-2a8a-455b-84c0-a3743d756dce\",\n    \"transcript_path\": \"/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl\",\n    \"hook_event_name\": \"PreToolUse\",\n    \"tool_name\": \"Read\",\n    \"tool_input\": {\n      \"file_path\": \"/home/karim/.claude/hooks/utils/tts/openai_tts.py\"\n    }\n  },\n  {\n    \"session_id\": \"1b460138-2a8a-455b-84c0-a3743d756dce\",\n    \"transcript_path\": \"/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl\",\n    \"hook_event_name\": \"PreToolUse\",\n    \"tool_name\": \"Read\",\n    \"tool_input\": {\n      \"file_path\": \"/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py\"\n    }\n  },\n  {\n    \"session_id\": \"1b460138-2a8a-455b-84c0-a3743d756dce\",\n    \"transcript_path\": \"/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl\",\n    \"hook_event_name\": \"PreToolUse\",\n    \"tool_name\": \"Glob\",\n    \"tool_input\": {\n      \"pattern\": \"**/*.{json,yaml,yml,toml,conf,config}\",\n      \"path\": \"/home/karim/.claude\"\n    }\n  },\n  {\n    \"session_id\": \"1b460138-2a8a-455b-84c0-a3743d756dce\",\n    \"transcript_path\": \"/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl\",\n    \"hook_event_name\": \"PreToolUse\",\n    \"tool_name\": \"Read\",\n    \"tool_input\": {\n      \"file_path\": \"/home/karim/.claude/hooks/utils/tts/logs/pre_tool_use.json\"\n    }\n  }\n]",
+        "numLines": 99,
+        "startLine": 1,
+        "totalLines": 99
+      }
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Bash",
+    "tool_input": {
+      "command": "find /home/karim/.claude/hooks -name \"*.sh\" -o -name \"*.py\" -o -name \"*.js\" | grep -E \"(hook|config|settings)\" | head -20",
+      "description": "Search for hook or config scripts"
+    },
+    "tool_response": {
+      "stdout": "/home/karim/.claude/hooks/utils/llm/anth.py\n/home/karim/.claude/hooks/utils/llm/oai.py\n/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py\n/home/karim/.claude/hooks/utils/tts/openai_tts.py\n/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py\n/home/karim/.claude/hooks/post_tool_use.py\n/home/karim/.claude/hooks/common-helpers.sh\n/home/karim/.claude/hooks/smart-lint.sh\n/home/karim/.claude/hooks/stop.py\n/home/karim/.claude/hooks/pre_tool_use.py\n/home/karim/.claude/hooks/notification.py\n/home/karim/.claude/hooks/subagent_stop.py\n/home/karim/.claude/hooks/violation-status.sh",
+      "stderr": "",
+      "interrupted": false,
+      "isImage": false
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Read",
+    "tool_input": {
+      "file_path": "/home/karim/.claude/hooks/post_tool_use.py"
+    },
+    "tool_response": {
+      "type": "text",
+      "file": {
+        "filePath": "/home/karim/.claude/hooks/post_tool_use.py",
+        "content": "#!/usr/bin/env -S uv run --script\n# /// script\n# requires-python = \">=3.8\"\n# ///\n\nimport json\nimport os\nimport sys\nfrom pathlib import Path\n\ndef main():\n    try:\n        # Read JSON input from stdin\n        input_data = json.load(sys.stdin)\n        \n        # Ensure log directory exists\n        log_dir = Path.cwd() / 'logs'\n        log_dir.mkdir(parents=True, exist_ok=True)\n        log_path = log_dir / 'post_tool_use.json'\n        \n        # Read existing log data or initialize empty list\n        if log_path.exists():\n            with open(log_path, 'r') as f:\n                try:\n                    log_data = json.load(f)\n                except (json.JSONDecodeError, ValueError):\n                    log_data = []\n        else:\n            log_data = []\n        \n        # Append new data\n        log_data.append(input_data)\n        \n        # Write back to file with formatting\n        with open(log_path, 'w') as f:\n            json.dump(log_data, f, indent=2)\n        \n        sys.exit(0)\n        \n    except json.JSONDecodeError:\n        # Handle JSON decode errors gracefully\n        sys.exit(0)\n    except Exception:\n        # Exit cleanly on any other error\n        sys.exit(0)\n\nif __name__ == '__main__':\n    main()",
+        "numLines": 48,
+        "startLine": 1,
+        "totalLines": 48
+      }
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Grep",
+    "tool_input": {
+      "pattern": "tts\\.py|pyttsx3|elevenlabs|openai_tts",
+      "path": "/home/karim/.claude/hooks",
+      "output_mode": "content",
+      "-n": true,
+      "-i": true
+    },
+    "tool_response": {
+      "mode": "content",
+      "numFiles": 0,
+      "filenames": [],
+      "content": "/home/karim/.claude/hooks/subagent_stop.py:27:    Priority order: ElevenLabs > OpenAI > pyttsx3\n/home/karim/.claude/hooks/subagent_stop.py:33:    # Check for ElevenLabs API key (highest priority)\n/home/karim/.claude/hooks/subagent_stop.py:34:    if os.getenv('ELEVENLABS_API_KEY'):\n/home/karim/.claude/hooks/subagent_stop.py:35:        elevenlabs_script = tts_dir / \"elevenlabs_tts.py\"\n/home/karim/.claude/hooks/subagent_stop.py:36:        if elevenlabs_script.exists():\n/home/karim/.claude/hooks/subagent_stop.py:37:            return str(elevenlabs_script)\n/home/karim/.claude/hooks/subagent_stop.py:41:        openai_script = tts_dir / \"openai_tts.py\"\n/home/karim/.claude/hooks/subagent_stop.py:45:    # Fall back to pyttsx3 (no API key required)\n/home/karim/.claude/hooks/subagent_stop.py:46:    pyttsx3_script = tts_dir / \"pyttsx3_tts.py\"\n/home/karim/.claude/hooks/subagent_stop.py:47:    if pyttsx3_script.exists():\n/home/karim/.claude/hooks/subagent_stop.py:48:        return str(pyttsx3_script)\n/home/karim/.claude/hooks/notification.py:27:    Priority order: ElevenLabs > OpenAI > pyttsx3\n/home/karim/.claude/hooks/notification.py:33:    # Check for ElevenLabs API key (highest priority)\n/home/karim/.claude/hooks/notification.py:34:    if os.getenv('ELEVENLABS_API_KEY'):\n/home/karim/.claude/hooks/notification.py:35:        elevenlabs_script = tts_dir / \"elevenlabs_tts.py\"\n/home/karim/.claude/hooks/notification.py:36:        if elevenlabs_script.exists():\n/home/karim/.claude/hooks/notification.py:37:            return str(elevenlabs_script)\n/home/karim/.claude/hooks/notification.py:41:        openai_script = tts_dir / \"openai_tts.py\"\n/home/karim/.claude/hooks/notification.py:45:    # Fall back to pyttsx3 (no API key required)\n/home/karim/.claude/hooks/notification.py:46:    pyttsx3_script = tts_dir / \"pyttsx3_tts.py\"\n/home/karim/.claude/hooks/notification.py:47:    if pyttsx3_script.exists():\n/home/karim/.claude/hooks/notification.py:48:        return str(pyttsx3_script)\n/home/karim/.claude/hooks/stop.py:39:    Priority order: ElevenLabs > OpenAI > pyttsx3\n/home/karim/.claude/hooks/stop.py:45:    # Check for ElevenLabs API key (highest priority)\n/home/karim/.claude/hooks/stop.py:46:    if os.getenv('ELEVENLABS_API_KEY'):\n/home/karim/.claude/hooks/stop.py:47:        elevenlabs_script = tts_dir / \"elevenlabs_tts.py\"\n/home/karim/.claude/hooks/stop.py:48:        if elevenlabs_script.exists():\n/home/karim/.claude/hooks/stop.py:49:            return str(elevenlabs_script)\n/home/karim/.claude/hooks/stop.py:53:        openai_script = tts_dir / \"openai_tts.py\"\n/home/karim/.claude/hooks/stop.py:57:    # Fall back to pyttsx3 (no API key required)\n/home/karim/.claude/hooks/stop.py:58:    pyttsx3_script = tts_dir / \"pyttsx3_tts.py\"\n/home/karim/.claude/hooks/stop.py:59:    if pyttsx3_script.exists():\n/home/karim/.claude/hooks/stop.py:60:        return str(pyttsx3_script)\n/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py:5:#     \"elevenlabs\",\n/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py:17:    ElevenLabs Turbo v2.5 TTS Script\n/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py:19:    Uses ElevenLabs' Turbo v2.5 model for fast, high-quality text-to-speech.\n/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py:23:    - ./eleven_turbo_tts.py                    # Uses default text\n/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py:24:    - ./eleven_turbo_tts.py \"Your custom text\" # Uses provided text\n/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py:37:    api_key = os.getenv('ELEVENLABS_API_KEY')\n/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py:39:        print(\"\u274c Error: ELEVENLABS_API_KEY not found in environment variables\")\n/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py:40:        print(\"Please add your ElevenLabs API key to .env file:\")\n/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py:41:        print(\"ELEVENLABS_API_KEY=your_api_key_here\")\n/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py:45:        from elevenlabs.client import ElevenLabs\n/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py:46:        from elevenlabs import play\n/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py:49:        elevenlabs = ElevenLabs(api_key=api_key)\n/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py:51:        print(\"\ud83c\udf99\ufe0f  ElevenLabs Turbo v2.5 TTS\")\n/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py:65:            audio = elevenlabs.text_to_speech.convert(\n/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py:80:        print(\"\u274c Error: elevenlabs package not installed\")\n/home/karim/.claude/hooks/utils/tts/openai_tts.py:26:    - ./openai_tts.py                    # Uses default text\n/home/karim/.claude/hooks/utils/tts/openai_tts.py:27:    - ./openai_tts.py \"Your custom text\" # Uses provided text\n/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py:5:#     \"pyttsx3\",\n/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py:14:    pyttsx3 TTS Script\n/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py:16:    Uses pyttsx3 for offline text-to-speech synthesis.\n/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py:20:    - ./pyttsx3_tts.py                    # Uses default text\n/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py:21:    - ./pyttsx3_tts.py \"Your custom text\" # Uses provided text\n/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py:31:        import pyttsx3\n/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py:34:        engine = pyttsx3.init()\n/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py:40:        print(\"\ud83c\udf99\ufe0f  pyttsx3 TTS\")\n/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py:67:        print(\"\u274c Error: pyttsx3 package not installed\")\n/home/karim/.claude/hooks/utils/tts/logs/pre_tool_use.json:59:      \"file_path\": \"/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py\"\n/home/karim/.claude/hooks/utils/tts/logs/pre_tool_use.json:68:      \"file_path\": \"/home/karim/.claude/hooks/utils/tts/openai_tts.py\"\n/home/karim/.claude/hooks/utils/tts/logs/pre_tool_use.json:77:      \"file_path\": \"/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py\"\n/home/karim/.claude/hooks/utils/tts/logs/pre_tool_use.json:124:      \"pattern\": \"tts\\\\.py|pyttsx3|elevenlabs|openai_tts\",\n/home/karim/.claude/hooks/utils/tts/logs/post_tool_use.json:26:    \"tool_response\": \"- /home/karim/.claude/hooks/utils/tts/\\n  - elevenlabs_tts.py\\n  - logs/\\n    - post_tool_use.json\\n    - pre_tool_use.json\\n  - openai_tts.py\\n  - pyttsx3_tts.py\\n\"\n/home/karim/.claude/hooks/utils/tts/logs/post_tool_use.json:39:        \"/home/karim/.claude/hooks/utils/tts/openai_tts.py\",\n/home/karim/.claude/hooks/utils/tts/logs/post_tool_use.json:40:        \"/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py\",\n/home/karim/.claude/hooks/utils/tts/logs/post_tool_use.json:41:        \"/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py\"\n/home/karim/.claude/hooks/utils/tts/logs/post_tool_use.json:63:        \"/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py\",\n/home/karim/.claude/hooks/utils/tts/logs/post_tool_use.json:64:        \"/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py\",\n/home/karim/.claude/hooks/utils/tts/logs/post_tool_use.json:65:        \"/home/karim/.claude/hooks/utils/tts/openai_tts.py\"\n/home/karim/.claude/hooks/utils/tts/logs/post_tool_use.json:76:      \"file_path\": \"/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py\"\n/home/karim/.claude/hooks/utils/tts/logs/post_tool_use.json:81:        \"filePath\": \"/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py\",\n/home/karim/.claude/hooks/utils/tts/logs/post_tool_use.json:82:        \"content\": \"#!/usr/bin/env -S uv run --script\\n# /// script\\n# requires-python = \\\">=3.8\\\"\\n# dependencies = [\\n#     \\\"pyttsx3\\\",\\n# ]\\n# ///\\n\\nimport sys\\nimport random\\n\\ndef main():\\n    \\\"\\\"\\\"\\n    pyttsx3 TTS Script\\n    \\n    Uses pyttsx3 for offline text-to-speech synthesis.\\n    Accepts optional text prompt as command-line argument.\\n    \\n    Usage:\\n    - ./pyttsx3_tts.py                    # Uses default text\\n    - ./pyttsx3_tts.py \\\"Your custom text\\\" # Uses provided text\\n    \\n    Features:\\n    - Offline TTS (no API key required)\\n    - Cross-platform compatibility\\n    - Configurable voice settings\\n    - Immediate audio playback\\n    \\\"\\\"\\\"\\n    \\n    try:\\n        import pyttsx3\\n        \\n        # Initialize TTS engine\\n        engine = pyttsx3.init()\\n        \\n        # Configure engine settings\\n        engine.setProperty('rate', 180)    # Speech rate (words per minute)\\n        engine.setProperty('volume', 0.8)  # Volume (0.0 to 1.0)\\n        \\n        print(\\\"\\ud83c\\udf99\\ufe0f  pyttsx3 TTS\\\")\\n        print(\\\"=\\\" * 15)\\n        \\n        # Get text from command line argument or use default\\n        if len(sys.argv) > 1:\\n            text = \\\" \\\".join(sys.argv[1:])  # Join all arguments as text\\n        else:\\n            # Default completion messages\\n            completion_messages = [\\n                \\\"Work complete!\\\",\\n                \\\"All done!\\\",\\n                \\\"Task finished!\\\",\\n                \\\"Job complete!\\\",\\n                \\\"Ready for next task!\\\"\\n            ]\\n            text = random.choice(completion_messages)\\n        \\n        print(f\\\"\\ud83c\\udfaf Text: {text}\\\")\\n        print(\\\"\\ud83d\\udd0a Speaking...\\\")\\n        \\n        # Speak the text\\n        engine.say(text)\\n        engine.runAndWait()\\n        \\n        print(\\\"\\u2705 Playback complete!\\\")\\n        \\n    except ImportError:\\n        print(\\\"\\u274c Error: pyttsx3 package not installed\\\")\\n        print(\\\"This script uses UV to auto-install dependencies.\\\")\\n        sys.exit(1)\\n    except Exception as e:\\n        print(f\\\"\\u274c Error: {e}\\\")\\n        sys.exit(1)\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\",\n/home/karim/.claude/hooks/utils/tts/logs/post_tool_use.json:95:      \"file_path\": \"/home/karim/.claude/hooks/utils/tts/openai_tts.py\"\n/home/karim/.claude/hooks/utils/tts/logs/post_tool_use.json:100:        \"filePath\": \"/home/karim/.claude/hooks/utils/tts/openai_tts.py\",\n/home/karim/.claude/hooks/utils/tts/logs/post_tool_use.json:101:        \"content\": \"#!/usr/bin/env -S uv run --script\\n# /// script\\n# requires-python = \\\">=3.8\\\"\\n# dependencies = [\\n#     \\\"openai\\\",\\n#     \\\"openai[voice_helpers]\\\",\\n#     \\\"python-dotenv\\\",\\n# ]\\n# ///\\n\\nimport os\\nimport sys\\nimport asyncio\\nfrom pathlib import Path\\nfrom dotenv import load_dotenv\\n\\n\\nasync def main():\\n    \\\"\\\"\\\"\\n    OpenAI TTS Script\\n\\n    Uses OpenAI's latest TTS model for high-quality text-to-speech.\\n    Accepts optional text prompt as command-line argument.\\n\\n    Usage:\\n    - ./openai_tts.py                    # Uses default text\\n    - ./openai_tts.py \\\"Your custom text\\\" # Uses provided text\\n\\n    Features:\\n    - OpenAI gpt-4o-mini-tts model (latest)\\n    - Nova voice (engaging and warm)\\n    - Streaming audio with instructions support\\n    - Live audio playback via LocalAudioPlayer\\n    \\\"\\\"\\\"\\n\\n    # Load environment variables\\n    load_dotenv()\\n\\n    # Get API key from environment\\n    api_key = os.getenv(\\\"OPENAI_API_KEY\\\")\\n    if not api_key:\\n        print(\\\"\\u274c Error: OPENAI_API_KEY not found in environment variables\\\")\\n        print(\\\"Please add your OpenAI API key to .env file:\\\")\\n        print(\\\"OPENAI_API_KEY=your_api_key_here\\\")\\n        sys.exit(1)\\n\\n    try:\\n        from openai import AsyncOpenAI\\n        from openai.helpers import LocalAudioPlayer\\n\\n        # Initialize OpenAI client\\n        openai = AsyncOpenAI(api_key=api_key)\\n\\n        print(\\\"\\ud83c\\udf99\\ufe0f  OpenAI TTS\\\")\\n        print(\\\"=\\\" * 20)\\n\\n        # Get text from command line argument or use default\\n        if len(sys.argv) > 1:\\n            text = \\\" \\\".join(sys.argv[1:])  # Join all arguments as text\\n        else:\\n            text = \\\"Today is a wonderful day to build something people love!\\\"\\n\\n        print(f\\\"\\ud83c\\udfaf Text: {text}\\\")\\n        print(\\\"\\ud83d\\udd0a Generating and streaming...\\\")\\n\\n        try:\\n            # Generate and stream audio using OpenAI TTS\\n            async with openai.audio.speech.with_streaming_response.create(\\n                model=\\\"gpt-4o-mini-tts\\\",\\n                voice=\\\"nova\\\",\\n                input=text,\\n                instructions=\\\"Speak in a cheerful, positive yet professional tone.\\\",\\n                response_format=\\\"mp3\\\",\\n            ) as response:\\n                await LocalAudioPlayer().play(response)\\n\\n            print(\\\"\\u2705 Playback complete!\\\")\\n\\n        except Exception as e:\\n            print(f\\\"\\u274c Error: {e}\\\")\\n\\n    except ImportError as e:\\n        print(\\\"\\u274c Error: Required package not installed\\\")\\n        print(\\\"This script uses UV to auto-install dependencies.\\\")\\n        print(\\\"Make sure UV is installed: https://docs.astral.sh/uv/\\\")\\n        sys.exit(1)\\n    except Exception as e:\\n        print(f\\\"\\u274c Unexpected error: {e}\\\")\\n        sys.exit(1)\\n\\n\\nif __name__ == \\\"__main__\\\":\\n    asyncio.run(main())\\n\",\n/home/karim/.claude/hooks/utils/tts/logs/post_tool_use.json:114:      \"file_path\": \"/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py\"\n/home/karim/.claude/hooks/utils/tts/logs/post_tool_use.json:119:        \"filePath\": \"/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py\",\n/home/karim/.claude/hooks/utils/tts/logs/post_tool_use.json:120:        \"content\": \"#!/usr/bin/env -S uv run --script\\n# /// script\\n# requires-python = \\\">=3.8\\\"\\n# dependencies = [\\n#     \\\"elevenlabs\\\",\\n#     \\\"python-dotenv\\\",\\n# ]\\n# ///\\n\\nimport os\\nimport sys\\nfrom pathlib import Path\\nfrom dotenv import load_dotenv\\n\\ndef main():\\n    \\\"\\\"\\\"\\n    ElevenLabs Turbo v2.5 TTS Script\\n    \\n    Uses ElevenLabs' Turbo v2.5 model for fast, high-quality text-to-speech.\\n    Accepts optional text prompt as command-line argument.\\n    \\n    Usage:\\n    - ./eleven_turbo_tts.py                    # Uses default text\\n    - ./eleven_turbo_tts.py \\\"Your custom text\\\" # Uses provided text\\n    \\n    Features:\\n    - Fast generation (optimized for real-time use)\\n    - High-quality voice synthesis\\n    - Stable production model\\n    - Cost-effective for high-volume usage\\n    \\\"\\\"\\\"\\n    \\n    # Load environment variables\\n    load_dotenv()\\n    \\n    # Get API key from environment\\n    api_key = os.getenv('ELEVENLABS_API_KEY')\\n    if not api_key:\\n        print(\\\"\\u274c Error: ELEVENLABS_API_KEY not found in environment variables\\\")\\n        print(\\\"Please add your ElevenLabs API key to .env file:\\\")\\n        print(\\\"ELEVENLABS_API_KEY=your_api_key_here\\\")\\n        sys.exit(1)\\n    \\n    try:\\n        from elevenlabs.client import ElevenLabs\\n        from elevenlabs import play\\n        \\n        # Initialize client\\n        elevenlabs = ElevenLabs(api_key=api_key)\\n        \\n        print(\\\"\\ud83c\\udf99\\ufe0f  ElevenLabs Turbo v2.5 TTS\\\")\\n        print(\\\"=\\\" * 40)\\n        \\n        # Get text from command line argument or use default\\n        if len(sys.argv) > 1:\\n            text = \\\" \\\".join(sys.argv[1:])  # Join all arguments as text\\n        else:\\n            text = \\\"The first move is what sets everything in motion.\\\"\\n        \\n        print(f\\\"\\ud83c\\udfaf Text: {text}\\\")\\n        print(\\\"\\ud83d\\udd0a Generating and playing...\\\")\\n        \\n        try:\\n            # Generate and play audio directly\\n            audio = elevenlabs.text_to_speech.convert(\\n                text=text,\\n                voice_id=\\\"onwK4e9ZLuTAKqWW03F9\\\",  # Daniel voice\\n                model_id=\\\"eleven_turbo_v2_5\\\",\\n                output_format=\\\"mp3_44100_128\\\",\\n            )\\n            \\n            play(audio)\\n            print(\\\"\\u2705 Playback complete!\\\")\\n            \\n        except Exception as e:\\n            print(f\\\"\\u274c Error: {e}\\\")\\n        \\n        \\n    except ImportError:\\n        print(\\\"\\u274c Error: elevenlabs package not installed\\\")\\n        print(\\\"This script uses UV to auto-install dependencies.\\\")\\n        print(\\\"Make sure UV is installed: https://docs.astral.sh/uv/\\\")\\n        sys.exit(1)\\n    except Exception as e:\\n        print(f\\\"\\u274c Unexpected error: {e}\\\")\\n        sys.exit(1)\\n\\nif __name__ == \\\"__main__\\\":\\n    main()\",\n/home/karim/.claude/hooks/utils/tts/logs/post_tool_use.json:256:        \"content\": \"[\\n  {\\n    \\\"session_id\\\": \\\"1b460138-2a8a-455b-84c0-a3743d756dce\\\",\\n    \\\"transcript_path\\\": \\\"/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl\\\",\\n    \\\"hook_event_name\\\": \\\"PreToolUse\\\",\\n    \\\"tool_name\\\": \\\"Task\\\",\\n    \\\"tool_input\\\": {\\n      \\\"description\\\": \\\"Search for TTS implementation\\\",\\n      \\\"prompt\\\": \\\"Search for files related to TTS (text-to-speech) implementation, volume control, or audio settings. Look for configuration files, scripts, or code that handles TTS commands.\\\"\\n    }\\n  },\\n  {\\n    \\\"session_id\\\": \\\"1b460138-2a8a-455b-84c0-a3743d756dce\\\",\\n    \\\"transcript_path\\\": \\\"/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl\\\",\\n    \\\"hook_event_name\\\": \\\"PreToolUse\\\",\\n    \\\"tool_name\\\": \\\"Bash\\\",\\n    \\\"tool_input\\\": {\\n      \\\"command\\\": \\\"pwd\\\",\\n      \\\"description\\\": \\\"Check current working directory\\\"\\n    }\\n  },\\n  {\\n    \\\"session_id\\\": \\\"1b460138-2a8a-455b-84c0-a3743d756dce\\\",\\n    \\\"transcript_path\\\": \\\"/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl\\\",\\n    \\\"hook_event_name\\\": \\\"PreToolUse\\\",\\n    \\\"tool_name\\\": \\\"LS\\\",\\n    \\\"tool_input\\\": {\\n      \\\"path\\\": \\\"/home/karim/.claude/hooks/utils/tts\\\"\\n    }\\n  },\\n  {\\n    \\\"session_id\\\": \\\"1b460138-2a8a-455b-84c0-a3743d756dce\\\",\\n    \\\"transcript_path\\\": \\\"/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl\\\",\\n    \\\"hook_event_name\\\": \\\"PreToolUse\\\",\\n    \\\"tool_name\\\": \\\"Glob\\\",\\n    \\\"tool_input\\\": {\\n      \\\"pattern\\\": \\\"**/*tts*\\\",\\n      \\\"path\\\": \\\"/home/karim/.claude/hooks\\\"\\n    }\\n  },\\n  {\\n    \\\"session_id\\\": \\\"1b460138-2a8a-455b-84c0-a3743d756dce\\\",\\n    \\\"transcript_path\\\": \\\"/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl\\\",\\n    \\\"hook_event_name\\\": \\\"PreToolUse\\\",\\n    \\\"tool_name\\\": \\\"Grep\\\",\\n    \\\"tool_input\\\": {\\n      \\\"pattern\\\": \\\"volume|audio|speech|voice\\\",\\n      \\\"path\\\": \\\"/home/karim/.claude/hooks\\\",\\n      \\\"output_mode\\\": \\\"files_with_matches\\\",\\n      \\\"-i\\\": true\\n    }\\n  },\\n  {\\n    \\\"session_id\\\": \\\"1b460138-2a8a-455b-84c0-a3743d756dce\\\",\\n    \\\"transcript_path\\\": \\\"/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl\\\",\\n    \\\"hook_event_name\\\": \\\"PreToolUse\\\",\\n    \\\"tool_name\\\": \\\"Read\\\",\\n    \\\"tool_input\\\": {\\n      \\\"file_path\\\": \\\"/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py\\\"\\n    }\\n  },\\n  {\\n    \\\"session_id\\\": \\\"1b460138-2a8a-455b-84c0-a3743d756dce\\\",\\n    \\\"transcript_path\\\": \\\"/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl\\\",\\n    \\\"hook_event_name\\\": \\\"PreToolUse\\\",\\n    \\\"tool_name\\\": \\\"Read\\\",\\n    \\\"tool_input\\\": {\\n      \\\"file_path\\\": \\\"/home/karim/.claude/hooks/utils/tts/openai_tts.py\\\"\\n    }\\n  },\\n  {\\n    \\\"session_id\\\": \\\"1b460138-2a8a-455b-84c0-a3743d756dce\\\",\\n    \\\"transcript_path\\\": \\\"/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl\\\",\\n    \\\"hook_event_name\\\": \\\"PreToolUse\\\",\\n    \\\"tool_name\\\": \\\"Read\\\",\\n    \\\"tool_input\\\": {\\n      \\\"file_path\\\": \\\"/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py\\\"\\n    }\\n  },\\n  {\\n    \\\"session_id\\\": \\\"1b460138-2a8a-455b-84c0-a3743d756dce\\\",\\n    \\\"transcript_path\\\": \\\"/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl\\\",\\n    \\\"hook_event_name\\\": \\\"PreToolUse\\\",\\n    \\\"tool_name\\\": \\\"Glob\\\",\\n    \\\"tool_input\\\": {\\n      \\\"pattern\\\": \\\"**/*.{json,yaml,yml,toml,conf,config}\\\",\\n      \\\"path\\\": \\\"/home/karim/.claude\\\"\\n    }\\n  },\\n  {\\n    \\\"session_id\\\": \\\"1b460138-2a8a-455b-84c0-a3743d756dce\\\",\\n    \\\"transcript_path\\\": \\\"/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl\\\",\\n    \\\"hook_event_name\\\": \\\"PreToolUse\\\",\\n    \\\"tool_name\\\": \\\"Read\\\",\\n    \\\"tool_input\\\": {\\n      \\\"file_path\\\": \\\"/home/karim/.claude/hooks/utils/tts/logs/pre_tool_use.json\\\"\\n    }\\n  }\\n]\",\n/home/karim/.claude/hooks/utils/tts/logs/post_tool_use.json:273:      \"stdout\": \"/home/karim/.claude/hooks/utils/llm/anth.py\\n/home/karim/.claude/hooks/utils/llm/oai.py\\n/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py\\n/home/karim/.claude/hooks/utils/tts/openai_tts.py\\n/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py\\n/home/karim/.claude/hooks/post_tool_use.py\\n/home/karim/.claude/hooks/common-helpers.sh\\n/home/karim/.claude/hooks/smart-lint.sh\\n/home/karim/.claude/hooks/stop.py\\n/home/karim/.claude/hooks/pre_tool_use.py\\n/home/karim/.claude/hooks/notification.py\\n/home/karim/.claude/hooks/subagent_stop.py\\n/home/karim/.claude/hooks/violation-status.sh\",",
+      "numLines": 81
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Read",
+    "tool_input": {
+      "file_path": "/home/karim/.claude/hooks/stop.py"
+    },
+    "tool_response": {
+      "type": "text",
+      "file": {
+        "filePath": "/home/karim/.claude/hooks/stop.py",
+        "content": "#!/usr/bin/env -S uv run --script\n# /// script\n# requires-python = \">=3.11\"\n# dependencies = [\n#     \"python-dotenv\",\n# ]\n# ///\n\nimport argparse\nimport json\nimport os\nimport sys\nimport random\nimport subprocess\nfrom pathlib import Path\nfrom datetime import datetime\n\ntry:\n    from dotenv import load_dotenv\n    load_dotenv()\nexcept ImportError:\n    pass  # dotenv is optional\n\n\ndef get_completion_messages():\n    \"\"\"Return list of friendly completion messages.\"\"\"\n    return [\n        \"Work complete!\",\n        \"All done!\",\n        \"Task finished!\",\n        \"Job complete!\",\n        \"Ready for next task!\"\n    ]\n\n\ndef get_tts_script_path():\n    \"\"\"\n    Determine which TTS script to use based on available API keys.\n    Priority order: ElevenLabs > OpenAI > pyttsx3\n    \"\"\"\n    # Get current script directory and construct utils/tts path\n    script_dir = Path(__file__).parent\n    tts_dir = script_dir / \"utils\" / \"tts\"\n    \n    # Check for ElevenLabs API key (highest priority)\n    if os.getenv('ELEVENLABS_API_KEY'):\n        elevenlabs_script = tts_dir / \"elevenlabs_tts.py\"\n        if elevenlabs_script.exists():\n            return str(elevenlabs_script)\n    \n    # Check for OpenAI API key (second priority)\n    if os.getenv('OPENAI_API_KEY'):\n        openai_script = tts_dir / \"openai_tts.py\"\n        if openai_script.exists():\n            return str(openai_script)\n    \n    # Fall back to pyttsx3 (no API key required)\n    pyttsx3_script = tts_dir / \"pyttsx3_tts.py\"\n    if pyttsx3_script.exists():\n        return str(pyttsx3_script)\n    \n    return None\n\n\ndef get_llm_completion_message():\n    \"\"\"\n    Generate completion message using available LLM services.\n    Priority order: OpenAI > Anthropic > fallback to random message\n    \n    Returns:\n        str: Generated or fallback completion message\n    \"\"\"\n    # Get current script directory and construct utils/llm path\n    script_dir = Path(__file__).parent\n    llm_dir = script_dir / \"utils\" / \"llm\"\n    \n    # Try OpenAI first (highest priority)\n    if os.getenv('OPENAI_API_KEY'):\n        oai_script = llm_dir / \"oai.py\"\n        if oai_script.exists():\n            try:\n                result = subprocess.run([\n                    \"uv\", \"run\", str(oai_script), \"--completion\"\n                ], \n                capture_output=True,\n                text=True,\n                timeout=10\n                )\n                if result.returncode == 0 and result.stdout.strip():\n                    return result.stdout.strip()\n            except (subprocess.TimeoutExpired, subprocess.SubprocessError):\n                pass\n    \n    # Try Anthropic second\n    if os.getenv('ANTHROPIC_API_KEY'):\n        anth_script = llm_dir / \"anth.py\"\n        if anth_script.exists():\n            try:\n                result = subprocess.run([\n                    \"uv\", \"run\", str(anth_script), \"--completion\"\n                ], \n                capture_output=True,\n                text=True,\n                timeout=10\n                )\n                if result.returncode == 0 and result.stdout.strip():\n                    return result.stdout.strip()\n            except (subprocess.TimeoutExpired, subprocess.SubprocessError):\n                pass\n    \n    # Fallback to random predefined message\n    messages = get_completion_messages()\n    return random.choice(messages)\n\ndef announce_completion():\n    \"\"\"Announce completion using the best available TTS service.\"\"\"\n    try:\n        tts_script = get_tts_script_path()\n        if not tts_script:\n            return  # No TTS scripts available\n        \n        # Get completion message (LLM-generated or fallback)\n        completion_message = get_llm_completion_message()\n        \n        # Call the TTS script with the completion message\n        subprocess.run([\n            \"uv\", \"run\", tts_script, completion_message\n        ], \n        capture_output=True,  # Suppress output\n        timeout=10  # 10-second timeout\n        )\n        \n    except (subprocess.TimeoutExpired, subprocess.SubprocessError, FileNotFoundError):\n        # Fail silently if TTS encounters issues\n        pass\n    except Exception:\n        # Fail silently for any other errors\n        pass\n\n\ndef main():\n    try:\n        # Parse command line arguments\n        parser = argparse.ArgumentParser()\n        parser.add_argument('--chat', action='store_true', help='Copy transcript to chat.json')\n        args = parser.parse_args()\n        \n        # Read JSON input from stdin\n        input_data = json.load(sys.stdin)\n\n        # Extract required fields\n        session_id = input_data.get(\"session_id\", \"\")\n        stop_hook_active = input_data.get(\"stop_hook_active\", False)\n\n        # Ensure log directory exists\n        log_dir = os.path.join(os.getcwd(), \"logs\")\n        os.makedirs(log_dir, exist_ok=True)\n        log_path = os.path.join(log_dir, \"stop.json\")\n\n        # Read existing log data or initialize empty list\n        if os.path.exists(log_path):\n            with open(log_path, 'r') as f:\n                try:\n                    log_data = json.load(f)\n                except (json.JSONDecodeError, ValueError):\n                    log_data = []\n        else:\n            log_data = []\n        \n        # Append new data\n        log_data.append(input_data)\n        \n        # Write back to file with formatting\n        with open(log_path, 'w') as f:\n            json.dump(log_data, f, indent=2)\n        \n        # Handle --chat switch\n        if args.chat and 'transcript_path' in input_data:\n            transcript_path = input_data['transcript_path']\n            if os.path.exists(transcript_path):\n                # Read .jsonl file and convert to JSON array\n                chat_data = []\n                try:\n                    with open(transcript_path, 'r') as f:\n                        for line in f:\n                            line = line.strip()\n                            if line:\n                                try:\n                                    chat_data.append(json.loads(line))\n                                except json.JSONDecodeError:\n                                    pass  # Skip invalid lines\n                    \n                    # Write to logs/chat.json\n                    chat_file = os.path.join(log_dir, 'chat.json')\n                    with open(chat_file, 'w') as f:\n                        json.dump(chat_data, f, indent=2)\n                except Exception:\n                    pass  # Fail silently\n\n        # Announce completion via TTS\n        announce_completion()\n\n        sys.exit(0)\n\n    except json.JSONDecodeError:\n        # Handle JSON decode errors gracefully\n        sys.exit(0)\n    except Exception:\n        # Handle any other errors gracefully\n        sys.exit(0)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+        "numLines": 215,
+        "startLine": 1,
+        "totalLines": 215
+      }
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Bash",
+    "tool_input": {
+      "command": "ls -la /home/karim/.claude/hooks/utils/tts/.env 2>/dev/null || echo \"No .env file found\"",
+      "description": "Check for .env file in TTS directory"
+    },
+    "tool_response": {
+      "stdout": "No .env file found",
+      "stderr": "",
+      "interrupted": false,
+      "isImage": false
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Task",
+    "tool_input": {
+      "description": "Search for TTS implementation",
+      "prompt": "Search for files related to TTS (text-to-speech) implementation, volume control, or audio settings. Look for configuration files, scripts, or code that handles TTS commands."
+    },
+    "tool_response": {
+      "content": [
+        {
+          "type": "text",
+          "text": "## Summary: TTS Implementation Files Found\n\nI've successfully searched for and found the TTS (text-to-speech) implementation files in your Claude hooks setup. Here's what I discovered:\n\n### TTS Scripts Located\nThe TTS implementation files are located in `/home/karim/.claude/hooks/utils/tts/`:\n\n1. **`pyttsx3_tts.py`** - Offline TTS implementation\n   - Uses pyttsx3 library for cross-platform text-to-speech\n   - **Volume control**: Set to 0.8 (80%) on line 38\n   - Speech rate: 180 words per minute\n   - No API key required\n   - Default fallback option\n\n2. **`openai_tts.py`** - OpenAI TTS implementation\n   - Uses OpenAI's gpt-4o-mini-tts model\n   - Nova voice with cheerful, positive tone\n   - Requires OPENAI_API_KEY environment variable\n   - No direct volume control in script (uses system default)\n\n3. **`elevenlabs_tts.py`** - ElevenLabs TTS implementation\n   - Uses ElevenLabs Turbo v2.5 model\n   - Daniel voice (voice_id: \"onwK4e9ZLuTAKqWW03F9\")\n   - Requires ELEVENLABS_API_KEY environment variable\n   - No direct volume control in script (uses system default)\n\n### Hook Integration\nThese TTS scripts are called by several hook scripts:\n- `/home/karim/.claude/hooks/stop.py`\n- `/home/karim/.claude/hooks/notification.py`\n- `/home/karim/.claude/hooks/subagent_stop.py`\n\n### Priority Order\nThe hooks use this priority order for TTS selection:\n1. ElevenLabs (if API key available)\n2. OpenAI (if API key available)\n3. pyttsx3 (always available, no API needed)\n\n### Volume Control\nCurrently, only the **pyttsx3_tts.py** script has explicit volume control:\n```python\nengine.setProperty('volume', 0.8)  # Volume (0.0 to 1.0)\n```\n\nThe OpenAI and ElevenLabs implementations rely on system volume settings as they use their respective libraries' default audio playback methods."
+        }
+      ],
+      "totalDurationMs": 1830529,
+      "totalTokens": 75744,
+      "totalToolUseCount": 14,
+      "usage": {
+        "input_tokens": 0,
+        "cache_creation_input_tokens": 695,
+        "cache_read_input_tokens": 74493,
+        "output_tokens": 556,
+        "service_tier": "standard"
+      },
+      "wasInterrupted": false
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "TodoWrite",
+    "tool_input": {
+      "todos": [
+        {
+          "content": "Check current pyttsx3 volume setting",
+          "status": "in_progress",
+          "priority": "high",
+          "id": "1"
+        },
+        {
+          "content": "Reduce volume in pyttsx3_tts.py",
+          "status": "pending",
+          "priority": "high",
+          "id": "2"
+        },
+        {
+          "content": "Test the volume change",
+          "status": "pending",
+          "priority": "medium",
+          "id": "3"
+        }
+      ]
+    },
+    "tool_response": {
+      "oldTodos": [],
+      "newTodos": [
+        {
+          "content": "Check current pyttsx3 volume setting",
+          "status": "in_progress",
+          "priority": "high",
+          "id": "1"
+        },
+        {
+          "content": "Reduce volume in pyttsx3_tts.py",
+          "status": "pending",
+          "priority": "high",
+          "id": "2"
+        },
+        {
+          "content": "Test the volume change",
+          "status": "pending",
+          "priority": "medium",
+          "id": "3"
+        }
+      ]
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Read",
+    "tool_input": {
+      "file_path": "/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py"
+    },
+    "tool_response": {
+      "type": "text",
+      "file": {
+        "filePath": "/home/karim/.claude/hooks/utils/tts/pyttsx3_tts.py",
+        "content": "#!/usr/bin/env -S uv run --script\n# /// script\n# requires-python = \">=3.8\"\n# dependencies = [\n#     \"pyttsx3\",\n# ]\n# ///\n\nimport sys\nimport random\n\ndef main():\n    \"\"\"\n    pyttsx3 TTS Script\n    \n    Uses pyttsx3 for offline text-to-speech synthesis.\n    Accepts optional text prompt as command-line argument.\n    \n    Usage:\n    - ./pyttsx3_tts.py                    # Uses default text\n    - ./pyttsx3_tts.py \"Your custom text\" # Uses provided text\n    \n    Features:\n    - Offline TTS (no API key required)\n    - Cross-platform compatibility\n    - Configurable voice settings\n    - Immediate audio playback\n    \"\"\"\n    \n    try:\n        import pyttsx3\n        \n        # Initialize TTS engine\n        engine = pyttsx3.init()\n        \n        # Configure engine settings\n        engine.setProperty('rate', 180)    # Speech rate (words per minute)\n        engine.setProperty('volume', 0.8)  # Volume (0.0 to 1.0)\n        \n        print(\"\ud83c\udf99\ufe0f  pyttsx3 TTS\")\n        print(\"=\" * 15)\n        \n        # Get text from command line argument or use default\n        if len(sys.argv) > 1:\n            text = \" \".join(sys.argv[1:])  # Join all arguments as text\n        else:\n            # Default completion messages\n            completion_messages = [\n                \"Work complete!\",\n                \"All done!\",\n                \"Task finished!\",\n                \"Job complete!\",\n                \"Ready for next task!\"\n            ]\n            text = random.choice(completion_messages)\n        \n        print(f\"\ud83c\udfaf Text: {text}\")\n        print(\"\ud83d\udd0a Speaking...\")\n        \n        # Speak the text\n        engine.say(text)\n        engine.runAndWait()\n        \n        print(\"\u2705 Playback complete!\")\n        \n    except ImportError:\n        print(\"\u274c Error: pyttsx3 package not installed\")\n        print(\"This script uses UV to auto-install dependencies.\")\n        sys.exit(1)\n    except Exception as e:\n        print(f\"\u274c Error: {e}\")\n        sys.exit(1)\n\nif __name__ == \"__main__\":\n    main()",
+        "numLines": 75,
+        "startLine": 1,
+        "totalLines": 75
+      }
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "TodoWrite",
+    "tool_input": {
+      "todos": [
+        {
+          "content": "Check current pyttsx3 volume setting",
+          "status": "completed",
+          "priority": "high",
+          "id": "1"
+        },
+        {
+          "content": "Check ElevenLabs TTS implementation",
+          "status": "in_progress",
+          "priority": "high",
+          "id": "2"
+        },
+        {
+          "content": "Add volume control to ElevenLabs TTS",
+          "status": "pending",
+          "priority": "high",
+          "id": "3"
+        },
+        {
+          "content": "Test the volume change",
+          "status": "pending",
+          "priority": "medium",
+          "id": "4"
+        }
+      ]
+    },
+    "tool_response": {
+      "oldTodos": [
+        {
+          "content": "Check current pyttsx3 volume setting",
+          "status": "in_progress",
+          "priority": "high",
+          "id": "1"
+        },
+        {
+          "content": "Reduce volume in pyttsx3_tts.py",
+          "status": "pending",
+          "priority": "high",
+          "id": "2"
+        },
+        {
+          "content": "Test the volume change",
+          "status": "pending",
+          "priority": "medium",
+          "id": "3"
+        }
+      ],
+      "newTodos": [
+        {
+          "content": "Check current pyttsx3 volume setting",
+          "status": "completed",
+          "priority": "high",
+          "id": "1"
+        },
+        {
+          "content": "Check ElevenLabs TTS implementation",
+          "status": "in_progress",
+          "priority": "high",
+          "id": "2"
+        },
+        {
+          "content": "Add volume control to ElevenLabs TTS",
+          "status": "pending",
+          "priority": "high",
+          "id": "3"
+        },
+        {
+          "content": "Test the volume change",
+          "status": "pending",
+          "priority": "medium",
+          "id": "4"
+        }
+      ]
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Read",
+    "tool_input": {
+      "file_path": "/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py"
+    },
+    "tool_response": {
+      "type": "text",
+      "file": {
+        "filePath": "/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py",
+        "content": "#!/usr/bin/env -S uv run --script\n# /// script\n# requires-python = \">=3.8\"\n# dependencies = [\n#     \"elevenlabs\",\n#     \"python-dotenv\",\n# ]\n# ///\n\nimport os\nimport sys\nfrom pathlib import Path\nfrom dotenv import load_dotenv\n\ndef main():\n    \"\"\"\n    ElevenLabs Turbo v2.5 TTS Script\n    \n    Uses ElevenLabs' Turbo v2.5 model for fast, high-quality text-to-speech.\n    Accepts optional text prompt as command-line argument.\n    \n    Usage:\n    - ./eleven_turbo_tts.py                    # Uses default text\n    - ./eleven_turbo_tts.py \"Your custom text\" # Uses provided text\n    \n    Features:\n    - Fast generation (optimized for real-time use)\n    - High-quality voice synthesis\n    - Stable production model\n    - Cost-effective for high-volume usage\n    \"\"\"\n    \n    # Load environment variables\n    load_dotenv()\n    \n    # Get API key from environment\n    api_key = os.getenv('ELEVENLABS_API_KEY')\n    if not api_key:\n        print(\"\u274c Error: ELEVENLABS_API_KEY not found in environment variables\")\n        print(\"Please add your ElevenLabs API key to .env file:\")\n        print(\"ELEVENLABS_API_KEY=your_api_key_here\")\n        sys.exit(1)\n    \n    try:\n        from elevenlabs.client import ElevenLabs\n        from elevenlabs import play\n        \n        # Initialize client\n        elevenlabs = ElevenLabs(api_key=api_key)\n        \n        print(\"\ud83c\udf99\ufe0f  ElevenLabs Turbo v2.5 TTS\")\n        print(\"=\" * 40)\n        \n        # Get text from command line argument or use default\n        if len(sys.argv) > 1:\n            text = \" \".join(sys.argv[1:])  # Join all arguments as text\n        else:\n            text = \"The first move is what sets everything in motion.\"\n        \n        print(f\"\ud83c\udfaf Text: {text}\")\n        print(\"\ud83d\udd0a Generating and playing...\")\n        \n        try:\n            # Generate and play audio directly\n            audio = elevenlabs.text_to_speech.convert(\n                text=text,\n                voice_id=\"onwK4e9ZLuTAKqWW03F9\",  # Daniel voice\n                model_id=\"eleven_turbo_v2_5\",\n                output_format=\"mp3_44100_128\",\n            )\n            \n            play(audio)\n            print(\"\u2705 Playback complete!\")\n            \n        except Exception as e:\n            print(f\"\u274c Error: {e}\")\n        \n        \n    except ImportError:\n        print(\"\u274c Error: elevenlabs package not installed\")\n        print(\"This script uses UV to auto-install dependencies.\")\n        print(\"Make sure UV is installed: https://docs.astral.sh/uv/\")\n        sys.exit(1)\n    except Exception as e:\n        print(f\"\u274c Unexpected error: {e}\")\n        sys.exit(1)\n\nif __name__ == \"__main__\":\n    main()",
+        "numLines": 89,
+        "startLine": 1,
+        "totalLines": 89
+      }
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "TodoWrite",
+    "tool_input": {
+      "todos": [
+        {
+          "content": "Check current pyttsx3 volume setting",
+          "status": "completed",
+          "priority": "high",
+          "id": "1"
+        },
+        {
+          "content": "Check ElevenLabs TTS implementation",
+          "status": "completed",
+          "priority": "high",
+          "id": "2"
+        },
+        {
+          "content": "Add volume control to ElevenLabs TTS",
+          "status": "in_progress",
+          "priority": "high",
+          "id": "3"
+        },
+        {
+          "content": "Test the volume change",
+          "status": "pending",
+          "priority": "medium",
+          "id": "4"
+        }
+      ]
+    },
+    "tool_response": {
+      "oldTodos": [
+        {
+          "content": "Check current pyttsx3 volume setting",
+          "status": "completed",
+          "priority": "high",
+          "id": "1"
+        },
+        {
+          "content": "Check ElevenLabs TTS implementation",
+          "status": "in_progress",
+          "priority": "high",
+          "id": "2"
+        },
+        {
+          "content": "Add volume control to ElevenLabs TTS",
+          "status": "pending",
+          "priority": "high",
+          "id": "3"
+        },
+        {
+          "content": "Test the volume change",
+          "status": "pending",
+          "priority": "medium",
+          "id": "4"
+        }
+      ],
+      "newTodos": [
+        {
+          "content": "Check current pyttsx3 volume setting",
+          "status": "completed",
+          "priority": "high",
+          "id": "1"
+        },
+        {
+          "content": "Check ElevenLabs TTS implementation",
+          "status": "completed",
+          "priority": "high",
+          "id": "2"
+        },
+        {
+          "content": "Add volume control to ElevenLabs TTS",
+          "status": "in_progress",
+          "priority": "high",
+          "id": "3"
+        },
+        {
+          "content": "Test the volume change",
+          "status": "pending",
+          "priority": "medium",
+          "id": "4"
+        }
+      ]
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Edit",
+    "tool_input": {
+      "file_path": "/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py",
+      "new_string": "#!/usr/bin/env -S uv run --script\n# /// script\n# requires-python = \">=3.8\"\n# dependencies = [\n#     \"elevenlabs\",\n#     \"python-dotenv\",\n#     \"pydub\",\n# ]\n# ///",
+      "old_string": "#!/usr/bin/env -S uv run --script\n# /// script\n# requires-python = \">=3.8\"\n# dependencies = [\n#     \"elevenlabs\",\n#     \"python-dotenv\",\n# ]\n# ///",
+      "replace_all": false
+    },
+    "tool_response": {
+      "filePath": "/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py",
+      "oldString": "#!/usr/bin/env -S uv run --script\n# /// script\n# requires-python = \">=3.8\"\n# dependencies = [\n#     \"elevenlabs\",\n#     \"python-dotenv\",\n# ]\n# ///",
+      "newString": "#!/usr/bin/env -S uv run --script\n# /// script\n# requires-python = \">=3.8\"\n# dependencies = [\n#     \"elevenlabs\",\n#     \"python-dotenv\",\n#     \"pydub\",\n# ]\n# ///",
+      "originalFile": "#!/usr/bin/env -S uv run --script\n# /// script\n# requires-python = \">=3.8\"\n# dependencies = [\n#     \"elevenlabs\",\n#     \"python-dotenv\",\n# ]\n# ///\n\nimport os\nimport sys\nfrom pathlib import Path\nfrom dotenv import load_dotenv\n\ndef main():\n    \"\"\"\n    ElevenLabs Turbo v2.5 TTS Script\n    \n    Uses ElevenLabs' Turbo v2.5 model for fast, high-quality text-to-speech.\n    Accepts optional text prompt as command-line argument.\n    \n    Usage:\n    - ./eleven_turbo_tts.py                    # Uses default text\n    - ./eleven_turbo_tts.py \"Your custom text\" # Uses provided text\n    \n    Features:\n    - Fast generation (optimized for real-time use)\n    - High-quality voice synthesis\n    - Stable production model\n    - Cost-effective for high-volume usage\n    \"\"\"\n    \n    # Load environment variables\n    load_dotenv()\n    \n    # Get API key from environment\n    api_key = os.getenv('ELEVENLABS_API_KEY')\n    if not api_key:\n        print(\"\u274c Error: ELEVENLABS_API_KEY not found in environment variables\")\n        print(\"Please add your ElevenLabs API key to .env file:\")\n        print(\"ELEVENLABS_API_KEY=your_api_key_here\")\n        sys.exit(1)\n    \n    try:\n        from elevenlabs.client import ElevenLabs\n        from elevenlabs import play\n        \n        # Initialize client\n        elevenlabs = ElevenLabs(api_key=api_key)\n        \n        print(\"\ud83c\udf99\ufe0f  ElevenLabs Turbo v2.5 TTS\")\n        print(\"=\" * 40)\n        \n        # Get text from command line argument or use default\n        if len(sys.argv) > 1:\n            text = \" \".join(sys.argv[1:])  # Join all arguments as text\n        else:\n            text = \"The first move is what sets everything in motion.\"\n        \n        print(f\"\ud83c\udfaf Text: {text}\")\n        print(\"\ud83d\udd0a Generating and playing...\")\n        \n        try:\n            # Generate and play audio directly\n            audio = elevenlabs.text_to_speech.convert(\n                text=text,\n                voice_id=\"onwK4e9ZLuTAKqWW03F9\",  # Daniel voice\n                model_id=\"eleven_turbo_v2_5\",\n                output_format=\"mp3_44100_128\",\n            )\n            \n            play(audio)\n            print(\"\u2705 Playback complete!\")\n            \n        except Exception as e:\n            print(f\"\u274c Error: {e}\")\n        \n        \n    except ImportError:\n        print(\"\u274c Error: elevenlabs package not installed\")\n        print(\"This script uses UV to auto-install dependencies.\")\n        print(\"Make sure UV is installed: https://docs.astral.sh/uv/\")\n        sys.exit(1)\n    except Exception as e:\n        print(f\"\u274c Unexpected error: {e}\")\n        sys.exit(1)\n\nif __name__ == \"__main__\":\n    main()",
+      "structuredPatch": [
+        {
+          "oldStart": 4,
+          "oldLines": 6,
+          "newStart": 4,
+          "newLines": 7,
+          "lines": [
+            " # dependencies = [",
+            " #     \"elevenlabs\",",
+            " #     \"python-dotenv\",",
+            "+#     \"pydub\",",
+            " # ]",
+            " # ///",
+            " "
+          ]
+        }
+      ],
+      "userModified": false,
+      "replaceAll": false
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Edit",
+    "tool_input": {
+      "file_path": "/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py",
+      "new_string": "import os\nimport sys\nimport io\nfrom pathlib import Path\nfrom dotenv import load_dotenv\nfrom pydub import AudioSegment\nfrom pydub.playback import play as pydub_play",
+      "old_string": "import os\nimport sys\nfrom pathlib import Path\nfrom dotenv import load_dotenv",
+      "replace_all": false
+    },
+    "tool_response": {
+      "filePath": "/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py",
+      "oldString": "import os\nimport sys\nfrom pathlib import Path\nfrom dotenv import load_dotenv",
+      "newString": "import os\nimport sys\nimport io\nfrom pathlib import Path\nfrom dotenv import load_dotenv\nfrom pydub import AudioSegment\nfrom pydub.playback import play as pydub_play",
+      "originalFile": "#!/usr/bin/env -S uv run --script\n# /// script\n# requires-python = \">=3.8\"\n# dependencies = [\n#     \"elevenlabs\",\n#     \"python-dotenv\",\n#     \"pydub\",\n# ]\n# ///\n\nimport os\nimport sys\nfrom pathlib import Path\nfrom dotenv import load_dotenv\n\ndef main():\n    \"\"\"\n    ElevenLabs Turbo v2.5 TTS Script\n    \n    Uses ElevenLabs' Turbo v2.5 model for fast, high-quality text-to-speech.\n    Accepts optional text prompt as command-line argument.\n    \n    Usage:\n    - ./eleven_turbo_tts.py                    # Uses default text\n    - ./eleven_turbo_tts.py \"Your custom text\" # Uses provided text\n    \n    Features:\n    - Fast generation (optimized for real-time use)\n    - High-quality voice synthesis\n    - Stable production model\n    - Cost-effective for high-volume usage\n    \"\"\"\n    \n    # Load environment variables\n    load_dotenv()\n    \n    # Get API key from environment\n    api_key = os.getenv('ELEVENLABS_API_KEY')\n    if not api_key:\n        print(\"\u274c Error: ELEVENLABS_API_KEY not found in environment variables\")\n        print(\"Please add your ElevenLabs API key to .env file:\")\n        print(\"ELEVENLABS_API_KEY=your_api_key_here\")\n        sys.exit(1)\n    \n    try:\n        from elevenlabs.client import ElevenLabs\n        from elevenlabs import play\n        \n        # Initialize client\n        elevenlabs = ElevenLabs(api_key=api_key)\n        \n        print(\"\ud83c\udf99\ufe0f  ElevenLabs Turbo v2.5 TTS\")\n        print(\"=\" * 40)\n        \n        # Get text from command line argument or use default\n        if len(sys.argv) > 1:\n            text = \" \".join(sys.argv[1:])  # Join all arguments as text\n        else:\n            text = \"The first move is what sets everything in motion.\"\n        \n        print(f\"\ud83c\udfaf Text: {text}\")\n        print(\"\ud83d\udd0a Generating and playing...\")\n        \n        try:\n            # Generate and play audio directly\n            audio = elevenlabs.text_to_speech.convert(\n                text=text,\n                voice_id=\"onwK4e9ZLuTAKqWW03F9\",  # Daniel voice\n                model_id=\"eleven_turbo_v2_5\",\n                output_format=\"mp3_44100_128\",\n            )\n            \n            play(audio)\n            print(\"\u2705 Playback complete!\")\n            \n        except Exception as e:\n            print(f\"\u274c Error: {e}\")\n        \n        \n    except ImportError:\n        print(\"\u274c Error: elevenlabs package not installed\")\n        print(\"This script uses UV to auto-install dependencies.\")\n        print(\"Make sure UV is installed: https://docs.astral.sh/uv/\")\n        sys.exit(1)\n    except Exception as e:\n        print(f\"\u274c Unexpected error: {e}\")\n        sys.exit(1)\n\nif __name__ == \"__main__\":\n    main()",
+      "structuredPatch": [
+        {
+          "oldStart": 10,
+          "oldLines": 8,
+          "newStart": 10,
+          "newLines": 11,
+          "lines": [
+            " ",
+            " import os",
+            " import sys",
+            "+import io",
+            " from pathlib import Path",
+            " from dotenv import load_dotenv",
+            "+from pydub import AudioSegment",
+            "+from pydub.playback import play as pydub_play",
+            " ",
+            " def main():",
+            "     \"\"\""
+          ]
+        }
+      ],
+      "userModified": false,
+      "replaceAll": false
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Read",
+    "tool_input": {
+      "file_path": "/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py",
+      "offset": 25,
+      "limit": 15
+    },
+    "tool_response": {
+      "type": "text",
+      "file": {
+        "filePath": "/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py",
+        "content": "    \n    Usage:\n    - ./eleven_turbo_tts.py                    # Uses default text\n    - ./eleven_turbo_tts.py \"Your custom text\" # Uses provided text\n    \n    Features:\n    - Fast generation (optimized for real-time use)\n    - High-quality voice synthesis\n    - Stable production model\n    - Cost-effective for high-volume usage\n    \"\"\"\n    \n    # Load environment variables\n    load_dotenv()\n    ",
+        "numLines": 15,
+        "startLine": 25,
+        "totalLines": 93
+      }
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Edit",
+    "tool_input": {
+      "file_path": "/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py",
+      "new_string": "    Features:\n    - Fast generation (optimized for real-time use)\n    - High-quality voice synthesis\n    - Stable production model\n    - Cost-effective for high-volume usage\n    - Volume control (0.0 to 1.0)\n    \"\"\"\n    \n    # Load environment variables\n    load_dotenv()\n    \n    # Volume setting (0.0 to 1.0)\n    VOLUME = 0.5  # 50% volume - adjust this value to change volume",
+      "old_string": "    Features:\n    - Fast generation (optimized for real-time use)\n    - High-quality voice synthesis\n    - Stable production model\n    - Cost-effective for high-volume usage\n    \"\"\"\n    \n    # Load environment variables\n    load_dotenv()",
+      "replace_all": false
+    },
+    "tool_response": {
+      "filePath": "/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py",
+      "oldString": "    Features:\n    - Fast generation (optimized for real-time use)\n    - High-quality voice synthesis\n    - Stable production model\n    - Cost-effective for high-volume usage\n    \"\"\"\n    \n    # Load environment variables\n    load_dotenv()",
+      "newString": "    Features:\n    - Fast generation (optimized for real-time use)\n    - High-quality voice synthesis\n    - Stable production model\n    - Cost-effective for high-volume usage\n    - Volume control (0.0 to 1.0)\n    \"\"\"\n    \n    # Load environment variables\n    load_dotenv()\n    \n    # Volume setting (0.0 to 1.0)\n    VOLUME = 0.5  # 50% volume - adjust this value to change volume",
+      "originalFile": "#!/usr/bin/env -S uv run --script\n# /// script\n# requires-python = \">=3.8\"\n# dependencies = [\n#     \"elevenlabs\",\n#     \"python-dotenv\",\n#     \"pydub\",\n# ]\n# ///\n\nimport os\nimport sys\nimport io\nfrom pathlib import Path\nfrom dotenv import load_dotenv\nfrom pydub import AudioSegment\nfrom pydub.playback import play as pydub_play\n\ndef main():\n    \"\"\"\n    ElevenLabs Turbo v2.5 TTS Script\n    \n    Uses ElevenLabs' Turbo v2.5 model for fast, high-quality text-to-speech.\n    Accepts optional text prompt as command-line argument.\n    \n    Usage:\n    - ./eleven_turbo_tts.py                    # Uses default text\n    - ./eleven_turbo_tts.py \"Your custom text\" # Uses provided text\n    \n    Features:\n    - Fast generation (optimized for real-time use)\n    - High-quality voice synthesis\n    - Stable production model\n    - Cost-effective for high-volume usage\n    \"\"\"\n    \n    # Load environment variables\n    load_dotenv()\n    \n    # Get API key from environment\n    api_key = os.getenv('ELEVENLABS_API_KEY')\n    if not api_key:\n        print(\"\u274c Error: ELEVENLABS_API_KEY not found in environment variables\")\n        print(\"Please add your ElevenLabs API key to .env file:\")\n        print(\"ELEVENLABS_API_KEY=your_api_key_here\")\n        sys.exit(1)\n    \n    try:\n        from elevenlabs.client import ElevenLabs\n        from elevenlabs import play\n        \n        # Initialize client\n        elevenlabs = ElevenLabs(api_key=api_key)\n        \n        print(\"\ud83c\udf99\ufe0f  ElevenLabs Turbo v2.5 TTS\")\n        print(\"=\" * 40)\n        \n        # Get text from command line argument or use default\n        if len(sys.argv) > 1:\n            text = \" \".join(sys.argv[1:])  # Join all arguments as text\n        else:\n            text = \"The first move is what sets everything in motion.\"\n        \n        print(f\"\ud83c\udfaf Text: {text}\")\n        print(\"\ud83d\udd0a Generating and playing...\")\n        \n        try:\n            # Generate and play audio directly\n            audio = elevenlabs.text_to_speech.convert(\n                text=text,\n                voice_id=\"onwK4e9ZLuTAKqWW03F9\",  # Daniel voice\n                model_id=\"eleven_turbo_v2_5\",\n                output_format=\"mp3_44100_128\",\n            )\n            \n            play(audio)\n            print(\"\u2705 Playback complete!\")\n            \n        except Exception as e:\n            print(f\"\u274c Error: {e}\")\n        \n        \n    except ImportError:\n        print(\"\u274c Error: elevenlabs package not installed\")\n        print(\"This script uses UV to auto-install dependencies.\")\n        print(\"Make sure UV is installed: https://docs.astral.sh/uv/\")\n        sys.exit(1)\n    except Exception as e:\n        print(f\"\u274c Unexpected error: {e}\")\n        sys.exit(1)\n\nif __name__ == \"__main__\":\n    main()",
+      "structuredPatch": [
+        {
+          "oldStart": 32,
+          "oldLines": 11,
+          "newStart": 32,
+          "newLines": 15,
+          "lines": [
+            "     - High-quality voice synthesis",
+            "     - Stable production model",
+            "     - Cost-effective for high-volume usage",
+            "+    - Volume control (0.0 to 1.0)",
+            "     \"\"\"",
+            "     ",
+            "     # Load environment variables",
+            "     load_dotenv()",
+            "     ",
+            "+    # Volume setting (0.0 to 1.0)",
+            "+    VOLUME = 0.5  # 50% volume - adjust this value to change volume",
+            "+    ",
+            "     # Get API key from environment",
+            "     api_key = os.getenv('ELEVENLABS_API_KEY')",
+            "     if not api_key:"
+          ]
+        }
+      ],
+      "userModified": false,
+      "replaceAll": false
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Edit",
+    "tool_input": {
+      "file_path": "/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py",
+      "new_string": "    try:\n        from elevenlabs.client import ElevenLabs",
+      "old_string": "    try:\n        from elevenlabs.client import ElevenLabs\n        from elevenlabs import play",
+      "replace_all": false
+    },
+    "tool_response": {
+      "filePath": "/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py",
+      "oldString": "    try:\n        from elevenlabs.client import ElevenLabs\n        from elevenlabs import play",
+      "newString": "    try:\n        from elevenlabs.client import ElevenLabs",
+      "originalFile": "#!/usr/bin/env -S uv run --script\n# /// script\n# requires-python = \">=3.8\"\n# dependencies = [\n#     \"elevenlabs\",\n#     \"python-dotenv\",\n#     \"pydub\",\n# ]\n# ///\n\nimport os\nimport sys\nimport io\nfrom pathlib import Path\nfrom dotenv import load_dotenv\nfrom pydub import AudioSegment\nfrom pydub.playback import play as pydub_play\n\ndef main():\n    \"\"\"\n    ElevenLabs Turbo v2.5 TTS Script\n    \n    Uses ElevenLabs' Turbo v2.5 model for fast, high-quality text-to-speech.\n    Accepts optional text prompt as command-line argument.\n    \n    Usage:\n    - ./eleven_turbo_tts.py                    # Uses default text\n    - ./eleven_turbo_tts.py \"Your custom text\" # Uses provided text\n    \n    Features:\n    - Fast generation (optimized for real-time use)\n    - High-quality voice synthesis\n    - Stable production model\n    - Cost-effective for high-volume usage\n    - Volume control (0.0 to 1.0)\n    \"\"\"\n    \n    # Load environment variables\n    load_dotenv()\n    \n    # Volume setting (0.0 to 1.0)\n    VOLUME = 0.5  # 50% volume - adjust this value to change volume\n    \n    # Get API key from environment\n    api_key = os.getenv('ELEVENLABS_API_KEY')\n    if not api_key:\n        print(\"\u274c Error: ELEVENLABS_API_KEY not found in environment variables\")\n        print(\"Please add your ElevenLabs API key to .env file:\")\n        print(\"ELEVENLABS_API_KEY=your_api_key_here\")\n        sys.exit(1)\n    \n    try:\n        from elevenlabs.client import ElevenLabs\n        from elevenlabs import play\n        \n        # Initialize client\n        elevenlabs = ElevenLabs(api_key=api_key)\n        \n        print(\"\ud83c\udf99\ufe0f  ElevenLabs Turbo v2.5 TTS\")\n        print(\"=\" * 40)\n        \n        # Get text from command line argument or use default\n        if len(sys.argv) > 1:\n            text = \" \".join(sys.argv[1:])  # Join all arguments as text\n        else:\n            text = \"The first move is what sets everything in motion.\"\n        \n        print(f\"\ud83c\udfaf Text: {text}\")\n        print(\"\ud83d\udd0a Generating and playing...\")\n        \n        try:\n            # Generate and play audio directly\n            audio = elevenlabs.text_to_speech.convert(\n                text=text,\n                voice_id=\"onwK4e9ZLuTAKqWW03F9\",  # Daniel voice\n                model_id=\"eleven_turbo_v2_5\",\n                output_format=\"mp3_44100_128\",\n            )\n            \n            play(audio)\n            print(\"\u2705 Playback complete!\")\n            \n        except Exception as e:\n            print(f\"\u274c Error: {e}\")\n        \n        \n    except ImportError:\n        print(\"\u274c Error: elevenlabs package not installed\")\n        print(\"This script uses UV to auto-install dependencies.\")\n        print(\"Make sure UV is installed: https://docs.astral.sh/uv/\")\n        sys.exit(1)\n    except Exception as e:\n        print(f\"\u274c Unexpected error: {e}\")\n        sys.exit(1)\n\nif __name__ == \"__main__\":\n    main()",
+      "structuredPatch": [
+        {
+          "oldStart": 51,
+          "oldLines": 7,
+          "newStart": 51,
+          "newLines": 6,
+          "lines": [
+            "     ",
+            "     try:",
+            "         from elevenlabs.client import ElevenLabs",
+            "-        from elevenlabs import play",
+            "         ",
+            "         # Initialize client",
+            "         elevenlabs = ElevenLabs(api_key=api_key)"
+          ]
+        }
+      ],
+      "userModified": false,
+      "replaceAll": false
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Edit",
+    "tool_input": {
+      "file_path": "/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py",
+      "new_string": "            # Generate audio\n            audio_generator = elevenlabs.text_to_speech.convert(\n                text=text,\n                voice_id=\"onwK4e9ZLuTAKqWW03F9\",  # Daniel voice\n                model_id=\"eleven_turbo_v2_5\",\n                output_format=\"mp3_44100_128\",\n            )\n            \n            # Collect all audio chunks\n            audio_data = b''.join(chunk for chunk in audio_generator)\n            \n            # Convert to AudioSegment for volume control\n            audio_segment = AudioSegment.from_mp3(io.BytesIO(audio_data))\n            \n            # Adjust volume (in dB)\n            # -6dB = 50% volume, -12dB = 25% volume, etc.\n            volume_db = 20 * (VOLUME ** 0.5) - 20  # Convert linear scale to dB\n            adjusted_audio = audio_segment + volume_db\n            \n            # Play the adjusted audio\n            pydub_play(adjusted_audio)\n            print(\"\u2705 Playback complete!\")",
+      "old_string": "            # Generate and play audio directly\n            audio = elevenlabs.text_to_speech.convert(\n                text=text,\n                voice_id=\"onwK4e9ZLuTAKqWW03F9\",  # Daniel voice\n                model_id=\"eleven_turbo_v2_5\",\n                output_format=\"mp3_44100_128\",\n            )\n            \n            play(audio)\n            print(\"\u2705 Playback complete!\")",
+      "replace_all": false
+    },
+    "tool_response": {
+      "filePath": "/home/karim/.claude/hooks/utils/tts/elevenlabs_tts.py",
+      "oldString": "            # Generate and play audio directly\n            audio = elevenlabs.text_to_speech.convert(\n                text=text,\n                voice_id=\"onwK4e9ZLuTAKqWW03F9\",  # Daniel voice\n                model_id=\"eleven_turbo_v2_5\",\n                output_format=\"mp3_44100_128\",\n            )\n            \n            play(audio)\n            print(\"\u2705 Playback complete!\")",
+      "newString": "            # Generate audio\n            audio_generator = elevenlabs.text_to_speech.convert(\n                text=text,\n                voice_id=\"onwK4e9ZLuTAKqWW03F9\",  # Daniel voice\n                model_id=\"eleven_turbo_v2_5\",\n                output_format=\"mp3_44100_128\",\n            )\n            \n            # Collect all audio chunks\n            audio_data = b''.join(chunk for chunk in audio_generator)\n            \n            # Convert to AudioSegment for volume control\n            audio_segment = AudioSegment.from_mp3(io.BytesIO(audio_data))\n            \n            # Adjust volume (in dB)\n            # -6dB = 50% volume, -12dB = 25% volume, etc.\n            volume_db = 20 * (VOLUME ** 0.5) - 20  # Convert linear scale to dB\n            adjusted_audio = audio_segment + volume_db\n            \n            # Play the adjusted audio\n            pydub_play(adjusted_audio)\n            print(\"\u2705 Playback complete!\")",
+      "originalFile": "#!/usr/bin/env -S uv run --script\n# /// script\n# requires-python = \">=3.8\"\n# dependencies = [\n#     \"elevenlabs\",\n#     \"python-dotenv\",\n#     \"pydub\",\n# ]\n# ///\n\nimport os\nimport sys\nimport io\nfrom pathlib import Path\nfrom dotenv import load_dotenv\nfrom pydub import AudioSegment\nfrom pydub.playback import play as pydub_play\n\ndef main():\n    \"\"\"\n    ElevenLabs Turbo v2.5 TTS Script\n    \n    Uses ElevenLabs' Turbo v2.5 model for fast, high-quality text-to-speech.\n    Accepts optional text prompt as command-line argument.\n    \n    Usage:\n    - ./eleven_turbo_tts.py                    # Uses default text\n    - ./eleven_turbo_tts.py \"Your custom text\" # Uses provided text\n    \n    Features:\n    - Fast generation (optimized for real-time use)\n    - High-quality voice synthesis\n    - Stable production model\n    - Cost-effective for high-volume usage\n    - Volume control (0.0 to 1.0)\n    \"\"\"\n    \n    # Load environment variables\n    load_dotenv()\n    \n    # Volume setting (0.0 to 1.0)\n    VOLUME = 0.5  # 50% volume - adjust this value to change volume\n    \n    # Get API key from environment\n    api_key = os.getenv('ELEVENLABS_API_KEY')\n    if not api_key:\n        print(\"\u274c Error: ELEVENLABS_API_KEY not found in environment variables\")\n        print(\"Please add your ElevenLabs API key to .env file:\")\n        print(\"ELEVENLABS_API_KEY=your_api_key_here\")\n        sys.exit(1)\n    \n    try:\n        from elevenlabs.client import ElevenLabs\n        \n        # Initialize client\n        elevenlabs = ElevenLabs(api_key=api_key)\n        \n        print(\"\ud83c\udf99\ufe0f  ElevenLabs Turbo v2.5 TTS\")\n        print(\"=\" * 40)\n        \n        # Get text from command line argument or use default\n        if len(sys.argv) > 1:\n            text = \" \".join(sys.argv[1:])  # Join all arguments as text\n        else:\n            text = \"The first move is what sets everything in motion.\"\n        \n        print(f\"\ud83c\udfaf Text: {text}\")\n        print(\"\ud83d\udd0a Generating and playing...\")\n        \n        try:\n            # Generate and play audio directly\n            audio = elevenlabs.text_to_speech.convert(\n                text=text,\n                voice_id=\"onwK4e9ZLuTAKqWW03F9\",  # Daniel voice\n                model_id=\"eleven_turbo_v2_5\",\n                output_format=\"mp3_44100_128\",\n            )\n            \n            play(audio)\n            print(\"\u2705 Playback complete!\")\n            \n        except Exception as e:\n            print(f\"\u274c Error: {e}\")\n        \n        \n    except ImportError:\n        print(\"\u274c Error: elevenlabs package not installed\")\n        print(\"This script uses UV to auto-install dependencies.\")\n        print(\"Make sure UV is installed: https://docs.astral.sh/uv/\")\n        sys.exit(1)\n    except Exception as e:\n        print(f\"\u274c Unexpected error: {e}\")\n        sys.exit(1)\n\nif __name__ == \"__main__\":\n    main()",
+      "structuredPatch": [
+        {
+          "oldStart": 68,
+          "oldLines": 15,
+          "newStart": 68,
+          "newLines": 27,
+          "lines": [
+            "         print(\"\ud83d\udd0a Generating and playing...\")",
+            "         ",
+            "         try:",
+            "-            # Generate and play audio directly",
+            "-            audio = elevenlabs.text_to_speech.convert(",
+            "+            # Generate audio",
+            "+            audio_generator = elevenlabs.text_to_speech.convert(",
+            "                 text=text,",
+            "                 voice_id=\"onwK4e9ZLuTAKqWW03F9\",  # Daniel voice",
+            "                 model_id=\"eleven_turbo_v2_5\",",
+            "                 output_format=\"mp3_44100_128\",",
+            "             )",
+            "             ",
+            "-            play(audio)",
+            "+            # Collect all audio chunks",
+            "+            audio_data = b''.join(chunk for chunk in audio_generator)",
+            "+            ",
+            "+            # Convert to AudioSegment for volume control",
+            "+            audio_segment = AudioSegment.from_mp3(io.BytesIO(audio_data))",
+            "+            ",
+            "+            # Adjust volume (in dB)",
+            "+            # -6dB = 50% volume, -12dB = 25% volume, etc.",
+            "+            volume_db = 20 * (VOLUME ** 0.5) - 20  # Convert linear scale to dB",
+            "+            adjusted_audio = audio_segment + volume_db",
+            "+            ",
+            "+            # Play the adjusted audio",
+            "+            pydub_play(adjusted_audio)",
+            "             print(\"\u2705 Playback complete!\")",
+            "             ",
+            "         except Exception as e:"
+          ]
+        }
+      ],
+      "userModified": false,
+      "replaceAll": false
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "TodoWrite",
+    "tool_input": {
+      "todos": [
+        {
+          "content": "Check current pyttsx3 volume setting",
+          "status": "completed",
+          "priority": "high",
+          "id": "1"
+        },
+        {
+          "content": "Check ElevenLabs TTS implementation",
+          "status": "completed",
+          "priority": "high",
+          "id": "2"
+        },
+        {
+          "content": "Add volume control to ElevenLabs TTS",
+          "status": "completed",
+          "priority": "high",
+          "id": "3"
+        },
+        {
+          "content": "Test the volume change",
+          "status": "in_progress",
+          "priority": "medium",
+          "id": "4"
+        }
+      ]
+    },
+    "tool_response": {
+      "oldTodos": [
+        {
+          "content": "Check current pyttsx3 volume setting",
+          "status": "completed",
+          "priority": "high",
+          "id": "1"
+        },
+        {
+          "content": "Check ElevenLabs TTS implementation",
+          "status": "completed",
+          "priority": "high",
+          "id": "2"
+        },
+        {
+          "content": "Add volume control to ElevenLabs TTS",
+          "status": "in_progress",
+          "priority": "high",
+          "id": "3"
+        },
+        {
+          "content": "Test the volume change",
+          "status": "pending",
+          "priority": "medium",
+          "id": "4"
+        }
+      ],
+      "newTodos": [
+        {
+          "content": "Check current pyttsx3 volume setting",
+          "status": "completed",
+          "priority": "high",
+          "id": "1"
+        },
+        {
+          "content": "Check ElevenLabs TTS implementation",
+          "status": "completed",
+          "priority": "high",
+          "id": "2"
+        },
+        {
+          "content": "Add volume control to ElevenLabs TTS",
+          "status": "completed",
+          "priority": "high",
+          "id": "3"
+        },
+        {
+          "content": "Test the volume change",
+          "status": "in_progress",
+          "priority": "medium",
+          "id": "4"
+        }
+      ]
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Bash",
+    "tool_input": {
+      "command": "chmod +x elevenlabs_tts.py && ./elevenlabs_tts.py \"Testing volume at 50 percent\"",
+      "description": "Make script executable and test"
+    },
+    "tool_response": {
+      "stdout": "\ud83c\udf99\ufe0f  ElevenLabs Turbo v2.5 TTS\n========================================\n\ud83c\udfaf Text: Testing volume at 50 percent\n\ud83d\udd0a Generating and playing...\n\u2705 Playback complete!\n    nan    :  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \rInput #0, wav, from '/tmp/tmpk1gk5ybc.wav':\n  Duration: 00:00:02.27, bitrate: 705 kb/s\n  Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 44100 Hz, 1 channels, s16, 705 kb/s\n   0.05 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.08 M-A: -0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.11 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.15 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.18 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.21 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.24 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.28 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.31 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.34 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.37 M-A:  0.000 fd=   0 aq=  100KB vq=    0KB sq=    0B f=0/0   \r   0.41 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.44 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.47 M-A:  0.000 fd=   0 aq=  100KB vq=    0KB sq=    0B f=0/0   \r   0.50 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.53 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.56 M-A:  0.000 fd=   0 aq=  100KB vq=    0KB sq=    0B f=0/0   \r   0.59 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.62 M-A:  0.000 fd=   0 aq=  100KB vq=    0KB sq=    0B f=0/0   \r   0.66 M-A:  0.000 fd=   0 aq=   96KB vq=    0KB sq=    0B f=0/0   \r   0.69 M-A:  0.000 fd=   0 aq=   96KB vq=    0KB sq=    0B f=0/0   \r   0.72 M-A: -0.000 fd=   0 aq=   92KB vq=    0KB sq=    0B f=0/0   \r   0.75 M-A:  0.000 fd=   0 aq=   88KB vq=    0KB sq=    0B f=0/0   \r   0.79 M-A:  0.000 fd=   0 aq=   88KB vq=    0KB sq=    0B f=0/0   \r   0.82 M-A:  0.000 fd=   0 aq=   84KB vq=    0KB sq=    0B f=0/0   \r   0.85 M-A:  0.000 fd=   0 aq=   80KB vq=    0KB sq=    0B f=0/0   \r   0.88 M-A:  0.000 fd=   0 aq=   76KB vq=    0KB sq=    0B f=0/0   \r   0.92 M-A:  0.000 fd=   0 aq=   76KB vq=    0KB sq=    0B f=0/0   \r   0.95 M-A: -0.000 fd=   0 aq=   72KB vq=    0KB sq=    0B f=0/0   \r   0.98 M-A:  0.000 fd=   0 aq=   68KB vq=    0KB sq=    0B f=0/0   \r   1.01 M-A:  0.000 fd=   0 aq=   68KB vq=    0KB sq=    0B f=0/0   \r   1.05 M-A:  0.000 fd=   0 aq=   64KB vq=    0KB sq=    0B f=0/0   \r   1.08 M-A:  0.000 fd=   0 aq=   60KB vq=    0KB sq=    0B f=0/0   \r   1.11 M-A:  0.000 fd=   0 aq=   60KB vq=    0KB sq=    0B f=0/0   \r   1.14 M-A:  0.000 fd=   0 aq=   55KB vq=    0KB sq=    0B f=0/0   \r   1.18 M-A: -0.000 fd=   0 aq=   51KB vq=    0KB sq=    0B f=0/0   \r   1.21 M-A:  0.000 fd=   0 aq=   47KB vq=    0KB sq=    0B f=0/0   \r   1.24 M-A:  0.000 fd=   0 aq=   47KB vq=    0KB sq=    0B f=0/0   \r   1.28 M-A:  0.000 fd=   0 aq=   43KB vq=    0KB sq=    0B f=0/0   \r   1.31 M-A:  0.000 fd=   0 aq=   39KB vq=    0KB sq=    0B f=0/0   \r   1.34 M-A:  0.000 fd=   0 aq=   39KB vq=    0KB sq=    0B f=0/0   \r   1.37 M-A:  0.000 fd=   0 aq=   35KB vq=    0KB sq=    0B f=0/0   \r   1.41 M-A:  0.000 fd=   0 aq=   31KB vq=    0KB sq=    0B f=0/0   \r   1.44 M-A:  0.000 fd=   0 aq=   31KB vq=    0KB sq=    0B f=0/0   \r   1.47 M-A:  0.000 fd=   0 aq=   27KB vq=    0KB sq=    0B f=0/0   \r   1.50 M-A:  0.000 fd=   0 aq=   23KB vq=    0KB sq=    0B f=0/0   \r   1.54 M-A:  0.000 fd=   0 aq=   19KB vq=    0KB sq=    0B f=0/0   \r   1.57 M-A:  0.000 fd=   0 aq=   19KB vq=    0KB sq=    0B f=0/0   \r   1.60 M-A:  0.000 fd=   0 aq=   15KB vq=    0KB sq=    0B f=0/0   \r   1.64 M-A:  0.000 fd=   0 aq=   11KB vq=    0KB sq=    0B f=0/0   \r   1.67 M-A:  0.000 fd=   0 aq=   11KB vq=    0KB sq=    0B f=0/0   \r   1.70 M-A:  0.000 fd=   0 aq=    7KB vq=    0KB sq=    0B f=0/0   \r   1.73 M-A:  0.000 fd=   0 aq=    3KB vq=    0KB sq=    0B f=0/0   \r   1.76 M-A:  0.000 fd=   0 aq=    3KB vq=    0KB sq=    0B f=0/0   \r   1.79 M-A:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   1.83 M-A:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   1.86 M-A:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   1.89 M-A: -0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   1.92 M-A:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   1.96 M-A:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   1.99 M-A:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   2.02 M-A:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   2.05 M-A:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   2.09 M-A:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   2.12 M-A: -0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   2.15 M-A:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   2.18 M-A:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0",
+      "stderr": "",
+      "interrupted": false,
+      "isImage": false
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "Bash",
+    "tool_input": {
+      "command": "uv run elevenlabs_tts.py \"Testing volume at 50 percent\"",
+      "description": "Test ElevenLabs TTS with uv run"
+    },
+    "tool_response": {
+      "stdout": "\ud83c\udf99\ufe0f  ElevenLabs Turbo v2.5 TTS\n========================================\n\ud83c\udfaf Text: Testing volume at 50 percent\n\ud83d\udd0a Generating and playing...\n\u2705 Playback complete!\n    nan    :  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \rInput #0, wav, from '/tmp/tmpp4kjek01.wav':\n  Duration: 00:00:02.17, bitrate: 705 kb/s\n  Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 44100 Hz, 1 channels, s16, 705 kb/s\n   0.06 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.09 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.12 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.15 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.18 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.21 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.24 M-A: -0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.27 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.30 M-A: -0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.33 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.36 M-A: -0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.39 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.42 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.45 M-A:  0.000 fd=   0 aq=  104KB vq=    0KB sq=    0B f=0/0   \r   0.48 M-A:  0.000 fd=   0 aq=  103KB vq=    0KB sq=    0B f=0/0   \r   0.51 M-A:  0.000 fd=   0 aq=   99KB vq=    0KB sq=    0B f=0/0   \r   0.54 M-A:  0.000 fd=   0 aq=   99KB vq=    0KB sq=    0B f=0/0   \r   0.57 M-A:  0.000 fd=   0 aq=   95KB vq=    0KB sq=    0B f=0/0   \r   0.60 M-A:  0.000 fd=   0 aq=   95KB vq=    0KB sq=    0B f=0/0   \r   0.63 M-A:  0.000 fd=   0 aq=   91KB vq=    0KB sq=    0B f=0/0   \r   0.66 M-A: -0.000 fd=   0 aq=   87KB vq=    0KB sq=    0B f=0/0   \r   0.69 M-A:  0.000 fd=   0 aq=   87KB vq=    0KB sq=    0B f=0/0   \r   0.72 M-A: -0.000 fd=   0 aq=   83KB vq=    0KB sq=    0B f=0/0   \r   0.75 M-A:  0.000 fd=   0 aq=   79KB vq=    0KB sq=    0B f=0/0   \r   0.78 M-A:  0.000 fd=   0 aq=   79KB vq=    0KB sq=    0B f=0/0   \r   0.81 M-A:  0.000 fd=   0 aq=   75KB vq=    0KB sq=    0B f=0/0   \r   0.84 M-A: -0.000 fd=   0 aq=   71KB vq=    0KB sq=    0B f=0/0   \r   0.87 M-A: -0.000 fd=   0 aq=   71KB vq=    0KB sq=    0B f=0/0   \r   0.90 M-A:  0.000 fd=   0 aq=   67KB vq=    0KB sq=    0B f=0/0   \r   0.94 M-A:  0.000 fd=   0 aq=   63KB vq=    0KB sq=    0B f=0/0   \r   0.97 M-A:  0.000 fd=   0 aq=   63KB vq=    0KB sq=    0B f=0/0   \r   1.00 M-A:  0.000 fd=   0 aq=   59KB vq=    0KB sq=    0B f=0/0   \r   1.03 M-A:  0.000 fd=   0 aq=   54KB vq=    0KB sq=    0B f=0/0   \r   1.06 M-A:  0.000 fd=   0 aq=   54KB vq=    0KB sq=    0B f=0/0   \r   1.09 M-A:  0.000 fd=   0 aq=   50KB vq=    0KB sq=    0B f=0/0   \r   1.12 M-A: -0.000 fd=   0 aq=   46KB vq=    0KB sq=    0B f=0/0   \r   1.15 M-A:  0.000 fd=   0 aq=   46KB vq=    0KB sq=    0B f=0/0   \r   1.18 M-A:  0.000 fd=   0 aq=   42KB vq=    0KB sq=    0B f=0/0   \r   1.21 M-A:  0.000 fd=   0 aq=   38KB vq=    0KB sq=    0B f=0/0   \r   1.24 M-A:  0.000 fd=   0 aq=   38KB vq=    0KB sq=    0B f=0/0   \r   1.27 M-A: -0.000 fd=   0 aq=   34KB vq=    0KB sq=    0B f=0/0   \r   1.30 M-A:  0.000 fd=   0 aq=   34KB vq=    0KB sq=    0B f=0/0   \r   1.33 M-A:  0.000 fd=   0 aq=   30KB vq=    0KB sq=    0B f=0/0   \r   1.36 M-A:  0.000 fd=   0 aq=   26KB vq=    0KB sq=    0B f=0/0   \r   1.39 M-A:  0.000 fd=   0 aq=   26KB vq=    0KB sq=    0B f=0/0   \r   1.42 M-A:  0.000 fd=   0 aq=   22KB vq=    0KB sq=    0B f=0/0   \r   1.45 M-A:  0.000 fd=   0 aq=   18KB vq=    0KB sq=    0B f=0/0   \r   1.48 M-A:  0.000 fd=   0 aq=   18KB vq=    0KB sq=    0B f=0/0   \r   1.51 M-A:  0.000 fd=   0 aq=   14KB vq=    0KB sq=    0B f=0/0   \r   1.54 M-A:  0.000 fd=   0 aq=   10KB vq=    0KB sq=    0B f=0/0   \r   1.57 M-A:  0.000 fd=   0 aq=   10KB vq=    0KB sq=    0B f=0/0   \r   1.60 M-A:  0.000 fd=   0 aq=    6KB vq=    0KB sq=    0B f=0/0   \r   1.63 M-A:  0.000 fd=   0 aq=    2KB vq=    0KB sq=    0B f=0/0   \r   1.66 M-A:  0.000 fd=   0 aq=    2KB vq=    0KB sq=    0B f=0/0   \r   1.69 M-A: -0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   1.72 M-A:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   1.75 M-A:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   1.78 M-A: -0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   1.81 M-A:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   1.84 M-A:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   1.87 M-A:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   1.90 M-A:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   1.94 M-A:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   1.97 M-A: -0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   2.00 M-A:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   2.03 M-A:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   2.06 M-A:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0   \r   2.09 M-A:  0.000 fd=   0 aq=    0KB vq=    0KB sq=    0B f=0/0",
+      "stderr": "",
+      "interrupted": false,
+      "isImage": false
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "TodoWrite",
+    "tool_input": {
+      "todos": [
+        {
+          "content": "Check current pyttsx3 volume setting",
+          "status": "completed",
+          "priority": "high",
+          "id": "1"
+        },
+        {
+          "content": "Check ElevenLabs TTS implementation",
+          "status": "completed",
+          "priority": "high",
+          "id": "2"
+        },
+        {
+          "content": "Add volume control to ElevenLabs TTS",
+          "status": "completed",
+          "priority": "high",
+          "id": "3"
+        },
+        {
+          "content": "Test the volume change",
+          "status": "completed",
+          "priority": "medium",
+          "id": "4"
+        },
+        {
+          "content": "Update pyttsx3 volume",
+          "status": "in_progress",
+          "priority": "medium",
+          "id": "5"
+        }
+      ]
+    },
+    "tool_response": {
+      "oldTodos": [
+        {
+          "content": "Check current pyttsx3 volume setting",
+          "status": "completed",
+          "priority": "high",
+          "id": "1"
+        },
+        {
+          "content": "Check ElevenLabs TTS implementation",
+          "status": "completed",
+          "priority": "high",
+          "id": "2"
+        },
+        {
+          "content": "Add volume control to ElevenLabs TTS",
+          "status": "completed",
+          "priority": "high",
+          "id": "3"
+        },
+        {
+          "content": "Test the volume change",
+          "status": "in_progress",
+          "priority": "medium",
+          "id": "4"
+        }
+      ],
+      "newTodos": [
+        {
+          "content": "Check current pyttsx3 volume setting",
+          "status": "completed",
+          "priority": "high",
+          "id": "1"
+        },
+        {
+          "content": "Check ElevenLabs TTS implementation",
+          "status": "completed",
+          "priority": "high",
+          "id": "2"
+        },
+        {
+          "content": "Add volume control to ElevenLabs TTS",
+          "status": "completed",
+          "priority": "high",
+          "id": "3"
+        },
+        {
+          "content": "Test the volume change",
+          "status": "completed",
+          "priority": "medium",
+          "id": "4"
+        },
+        {
+          "content": "Update pyttsx3 volume",
+          "status": "in_progress",
+          "priority": "medium",
+          "id": "5"
+        }
+      ]
+    }
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "PostToolUse",
+    "tool_name": "TodoWrite",
+    "tool_input": {
+      "todos": [
+        {
+          "content": "Check current pyttsx3 volume setting",
+          "status": "completed",
+          "priority": "high",
+          "id": "1"
+        },
+        {
+          "content": "Check ElevenLabs TTS implementation",
+          "status": "completed",
+          "priority": "high",
+          "id": "2"
+        },
+        {
+          "content": "Add volume control to ElevenLabs TTS",
+          "status": "completed",
+          "priority": "high",
+          "id": "3"
+        },
+        {
+          "content": "Test the volume change",
+          "status": "completed",
+          "priority": "medium",
+          "id": "4"
+        },
+        {
+          "content": "Update pyttsx3 volume",
+          "status": "completed",
+          "priority": "medium",
+          "id": "5"
+        }
+      ]
+    },
+    "tool_response": {
+      "oldTodos": [
+        {
+          "content": "Check current pyttsx3 volume setting",
+          "status": "completed",
+          "priority": "high",
+          "id": "1"
+        },
+        {
+          "content": "Check ElevenLabs TTS implementation",
+          "status": "completed",
+          "priority": "high",
+          "id": "2"
+        },
+        {
+          "content": "Add volume control to ElevenLabs TTS",
+          "status": "completed",
+          "priority": "high",
+          "id": "3"
+        },
+        {
+          "content": "Test the volume change",
+          "status": "completed",
+          "priority": "medium",
+          "id": "4"
+        },
+        {
+          "content": "Update pyttsx3 volume",
+          "status": "in_progress",
+          "priority": "medium",
+          "id": "5"
+        }
+      ],
+      "newTodos": [
+        {
+          "content": "Check current pyttsx3 volume setting",
+          "status": "completed",
+          "priority": "high",
+          "id": "1"
+        },
+        {
+          "content": "Check ElevenLabs TTS implementation",
+          "status": "completed",
+          "priority": "high",
+          "id": "2"
+        },
+        {
+          "content": "Add volume control to ElevenLabs TTS",
+          "status": "completed",
+          "priority": "high",
+          "id": "3"
+        },
+        {
+          "content": "Test the volume change",
+          "status": "completed",
+          "priority": "medium",
+          "id": "4"
+        },
+        {
+          "content": "Update pyttsx3 volume",
+          "status": "completed",
+          "priority": "medium",
+          "id": "5"
+        }
+      ]
+    }
+  }
+]

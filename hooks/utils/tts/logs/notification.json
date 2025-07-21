@@ -1,0 +1,50 @@
+[
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "Notification",
+    "message": "Claude needs your permission to use Search"
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "Notification",
+    "message": "Claude needs your permission to use Search"
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "Notification",
+    "message": "Claude needs your permission to use Search"
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "Notification",
+    "message": "Claude needs your permission to use Bash"
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "Notification",
+    "message": "Claude needs your permission to use Bash"
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "Notification",
+    "message": "Claude needs your permission to use Update"
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "Notification",
+    "message": "Claude needs your permission to use Update"
+  },
+  {
+    "session_id": "1b460138-2a8a-455b-84c0-a3743d756dce",
+    "transcript_path": "/home/karim/.claude/projects/-home-karim--claude-hooks-utils-tts/1b460138-2a8a-455b-84c0-a3743d756dce.jsonl",
+    "hook_event_name": "Notification",
+    "message": "Claude needs your permission to use Bash"
+  }
+]
