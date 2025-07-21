@@ -59,20 +59,19 @@ def is_env_exposure_command(command):
     # Normalize command by removing extra spaces
     normalized = ' '.join(command.lower().split())
     
-    # Dangerous environment variable exposure patterns
+    # Dangerous environment variable exposure patterns - be more specific
     exposure_patterns = [
-        r'\benv\s*\|',  # env | (piped output)
-        r'\bprintenv\s*\|',  # printenv | (piped output)
-        r'\benv\s+.*grep',  # env ... grep
-        r'\bprintenv\s+.*grep',  # printenv ... grep
-        r'\becho\s+.*\$[A-Z_][A-Z0-9_]*',  # echo $VARNAME patterns
-        r'\bprintf\s+.*\$[A-Z_][A-Z0-9_]*',  # printf $VARNAME patterns
-        r'grep\s+.*-[a-z]*E.*\$[A-Z_]',  # grep patterns with env vars
-        r'env\s*$',  # bare env command (shows all vars)
-        r'printenv\s*$',  # bare printenv command
-        r'set\s*\|.*grep',  # set | grep (bash builtin)
-        r'export\s*\|.*grep',  # export | grep
-        r'declare\s*\|.*grep',  # declare | grep (bash)
+        r'\benv\s*\|\s*grep',  # env | grep specifically
+        r'\bprintenv\s*\|\s*grep',  # printenv | grep specifically
+        r'\benv\s*\|\s*head',  # env | head
+        r'\bprintenv\s*\|\s*head',  # printenv | head
+        r'\benv\s+.*-E',  # env with grep -E flag
+        r'\bprintenv\s+.*-E',  # printenv with grep -E flag
+        r'^env\s*$',  # bare env command at start (shows all vars)
+        r'^printenv\s*$',  # bare printenv command at start
+        r'set\s*\|\s*grep',  # set | grep (bash builtin)
+        r'export\s*\|\s*grep',  # export | grep
+        r'declare\s*\|\s*grep',  # declare | grep (bash)
     ]
     
     # Check for exposure patterns
@@ -80,16 +79,22 @@ def is_env_exposure_command(command):
         if re.search(pattern, normalized):
             return True
     
-    # Check for specific sensitive variable patterns
-    sensitive_vars = [
-        'api_key', 'secret', 'token', 'password', 'pwd', 'auth',
-        'elevenlabs', 'openai', 'anthropic', 'claude', 'aws', 'gcp',
-        'github', 'gitlab', 'docker', 'npm', 'pypi', 'ssh'
+    # Check for direct env var access patterns - only specific sensitive variables
+    sensitive_env_patterns = [
+        r'\becho\s+.*\$[A-Z_]*API[_A-Z0-9]*KEY',  # echo $API_KEY variants
+        r'\becho\s+.*\$[A-Z_]*SECRET[_A-Z0-9]*',  # echo $SECRET variants
+        r'\becho\s+.*\$[A-Z_]*TOKEN[_A-Z0-9]*',  # echo $TOKEN variants
+        r'\becho\s+.*\$[A-Z_]*PASSWORD[_A-Z0-9]*',  # echo $PASSWORD variants
+        r'\becho\s+.*\$(ELEVENLABS|OPENAI|ANTHROPIC|CLAUDE|AWS|GCP)_[A-Z_]+',  # Specific service vars
+        r'\bprintf\s+.*\$[A-Z_]*API[_A-Z0-9]*KEY',  # printf equivalents
+        r'\bprintf\s+.*\$[A-Z_]*SECRET[_A-Z0-9]*',
+        r'\bprintf\s+.*\$[A-Z_]*TOKEN[_A-Z0-9]*',
+        r'\bprintf\s+.*\$[A-Z_]*PASSWORD[_A-Z0-9]*',
+        r'\bprintf\s+.*\$(ELEVENLABS|OPENAI|ANTHROPIC|CLAUDE|AWS|GCP)_[A-Z_]+',
     ]
     
-    for var in sensitive_vars:
-        # Pattern: command that might expose variables containing these keywords
-        pattern = rf'(env|printenv|echo|printf).*{var}'
+    # Check for specific sensitive variable exposure
+    for pattern in sensitive_env_patterns:
         if re.search(pattern, normalized):
             return True
     
