@@ -1,0 +1,23 @@
+# Cache files
+.channels_cache.json
+.channels_cache_v2.json
+.users_cache.json
+
+# Credentials and sensitive data
+.credentials.json
+settings.local.json
+
+# Logs
+logs/
+
+# Project-specific data
+projects/
+
+# Shell snapshots
+shell-snapshots/
+
+# Analytics/telemetry
+statsig/
+
+# Todo tracking
+todos/
