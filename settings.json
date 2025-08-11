@@ -7,10 +7,7 @@
     "allow": [
       "WebFetch",
       "Read",
-      "WebFetch(domain:*)",
-      "mcp__wsl-snap__list_windows",
-      "mcp__wsl-snap__take_screenshot",
-      "mcp__wsl-snap__get_last_screenshot"
+      "WebFetch(domain:*)"
     ],
     "deny": [
       "Bash(curl:*)"

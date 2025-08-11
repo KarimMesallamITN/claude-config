@@ -1,5 +1,5 @@
 {
-  "enabled": true,
+  "enabled": false,
   "volume": 0.05,
   "provider_priority": [
     "elevenlabs",
