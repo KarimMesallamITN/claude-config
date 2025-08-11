@@ -16,7 +16,6 @@
       "Bash(curl:*)"
     ]
   },
-  "model": "sonnet",
   "hooks": {
     "PreToolUse": [
       {
@@ -83,5 +82,8 @@
         ]
       }
     ]
+  },
+  "feedbackSurveyState": {
+    "lastShownTime": 1753989940505
   }
 }

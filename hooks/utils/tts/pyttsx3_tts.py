@@ -8,6 +8,11 @@
 
 import sys
 import random
+from pathlib import Path
+
+# Add parent directory to path to import config loader
+sys.path.insert(0, str(Path(__file__).parent))
+from tts_config_loader import tts_config
 
 def main():
     """
@@ -26,6 +31,20 @@ def main():
     - Configurable voice settings
     - Immediate audio playback
     """
+    
+    # Check if TTS is enabled
+    if not tts_config.is_enabled():
+        print("🔇 TTS is disabled in configuration")
+        return
+    
+    # Check if pyttsx3 provider is enabled
+    if not tts_config.is_provider_enabled("pyttsx3"):
+        print("🔇 pyttsx3 TTS provider is disabled")
+        return
+    
+    # Get configuration
+    config = tts_config.get_provider_config("pyttsx3")
+    volume = tts_config.get_volume()
     
     # Get text first
     import sys
@@ -54,8 +73,10 @@ def main():
         print(f"🎯 Text: {text}")
         print("🔊 Speaking...")
         
-        # Use espeak directly with good settings
-        subprocess.run(["espeak", "-s", "180", "-a", "80", text], check=True)
+        # Use espeak directly with configured volume
+        # Convert volume (0.0-1.0) to espeak amplitude (0-200)
+        espeak_volume = int(volume * 200)
+        subprocess.run(["espeak", "-s", "180", "-a", str(espeak_volume), text], check=True)
         
         print("✅ Playback complete!")
         
@@ -67,8 +88,8 @@ def main():
             import pyttsx3
             
             engine = pyttsx3.init()
-            engine.setProperty('rate', 180)
-            engine.setProperty('volume', 0.8)
+            engine.setProperty('rate', config.get('rate', 150))
+            engine.setProperty('volume', volume)
             
             print("🎙️  pyttsx3 TTS")
             print("=" * 15)

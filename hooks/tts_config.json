@@ -1,0 +1,36 @@
+{
+  "enabled": true,
+  "volume": 0.05,
+  "provider_priority": [
+    "elevenlabs",
+    "pyttsx3"
+  ],
+  "providers": {
+    "elevenlabs": {
+      "enabled": true,
+      "voice_id": "default",
+      "model": "eleven_monolingual_v1"
+    },
+    "openai": {
+      "enabled": false,
+      "voice": "alloy",
+      "model": "tts-1"
+    },
+    "pyttsx3": {
+      "enabled": true,
+      "rate": 150,
+      "voice_index": 0
+    }
+  },
+  "notifications": {
+    "on_task_complete": true,
+    "on_user_input_needed": true,
+    "on_subagent_complete": true,
+    "on_error": false
+  },
+  "quiet_hours": {
+    "enabled": false,
+    "start": "22:00",
+    "end": "08:00"
+  }
+}

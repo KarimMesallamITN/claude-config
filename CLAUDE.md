@@ -56,6 +56,7 @@ Includes: formatting (prettier), linting (eslint), type errors, ALL checks. 100%
 ```
 
 ## Git: Brief, clear commits
+- Never git commit without my permission
 
 ## JavaScript/TypeScript Rules
 
